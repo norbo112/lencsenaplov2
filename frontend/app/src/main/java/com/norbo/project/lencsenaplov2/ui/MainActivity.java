@@ -80,6 +80,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
 
     @Override
     public void clearLencseUi() {
-        binding.setLencseadat(new MutableLiveData<Lencse>());
+        lencseMutableLiveData.postValue(new Lencse());
     }
 }

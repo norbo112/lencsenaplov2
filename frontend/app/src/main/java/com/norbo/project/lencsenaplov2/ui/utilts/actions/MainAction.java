@@ -34,7 +34,7 @@ public class MainAction {
 
     public void kivesz(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
-        if(value != null && value.getKivetelIdopont() == 0) value.setKivetelIdopont(System.currentTimeMillis());
+        if(value != null && value.getKivetelIdopont() == 0 && value.getBetetelIdopont() != 0) value.setKivetelIdopont(System.currentTimeMillis());
         else return;
         lencseMutableLiveData.postValue(value);
 
