@@ -9,7 +9,7 @@
             type="androidx.lifecycle.MutableLiveData&lt;Lencse>" />
         <variable
             name="action"
-            type="com.norbo.project.lencsenaplov2.ui.utilts.actions.Actioner&lt;Lencse>" />
+            type="com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction" />
         <import type="com.norbo.project.lencsenaplov2.data.model.Lencse"/>
         <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils"/>
     </data>

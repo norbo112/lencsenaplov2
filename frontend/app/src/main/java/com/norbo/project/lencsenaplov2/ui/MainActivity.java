@@ -17,6 +17,7 @@ import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepo
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
+import com.norbo.project.lencsenaplov2.ui.utilts.ClearLencse;
 import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
 
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements ClearLencse {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
@@ -75,5 +76,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         outState.putSerializable(LENCSE_SAVED_KEY, lencseMutableLiveData.getValue());
         super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public void clearLencseUi() {
+        binding.setLencseadat(new MutableLiveData<Lencse>());
     }
 }

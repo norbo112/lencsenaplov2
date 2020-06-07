@@ -8,20 +8,22 @@ import androidx.lifecycle.MutableLiveData;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
+import com.norbo.project.lencsenaplov2.ui.utilts.ClearLencse;
 
 import javax.inject.Inject;
 
-public class MainAction implements Actioner<Lencse> {
+public class MainAction {
     private static final String TAG = MainAction.class.getSimpleName();
+    private ClearLencse clearLencse;
 
     public MainAction(Context context) {
         ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
+        this.clearLencse = (ClearLencse) context;
     }
 
     @Inject
     LencseViewModel lencseViewModel;
 
-    @Override
     public void betesz(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
         if(value != null && value.getBetetelIdopont() == 0) value.setBetetelIdopont(System.currentTimeMillis());
@@ -30,7 +32,6 @@ public class MainAction implements Actioner<Lencse> {
         Log.i(TAG, "betesz: lefutott");
     }
 
-    @Override
     public void kivesz(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
         if(value != null && value.getKivetelIdopont() == 0) value.setKivetelIdopont(System.currentTimeMillis());
@@ -38,20 +39,7 @@ public class MainAction implements Actioner<Lencse> {
         lencseMutableLiveData.postValue(value);
 
         lencseViewModel.insert(value);
-
+        clearLencse.clearLencseUi();
         Log.i(TAG, "kivesz: lefutott");
-    }
-
-    @Override
-    public void clear(MutableLiveData<Lencse> lencseMutableLiveData) {
-        Lencse value = lencseMutableLiveData.getValue();
-        if(value != null && value.getKivetelIdopont() != 0) {
-            value.setKivetelIdopont(0);
-            value.setBetetelIdopont(0);
-        } else {
-            return;
-        }
-        lencseMutableLiveData.postValue(value);
-        Log.i(TAG, "clear: lefutott");
     }
 }
