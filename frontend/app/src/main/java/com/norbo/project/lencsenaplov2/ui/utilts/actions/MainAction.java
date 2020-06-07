@@ -45,8 +45,12 @@ public class MainAction implements Actioner<Lencse> {
     @Override
     public void clear(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
-        if(value != null && value.getKivetelIdopont() != 0) value.setKivetelIdopont(0);
-        else return;
+        if(value != null && value.getKivetelIdopont() != 0) {
+            value.setKivetelIdopont(0);
+            value.setBetetelIdopont(0);
+        } else {
+            return;
+        }
         lencseMutableLiveData.postValue(value);
         Log.i(TAG, "clear: lefutott");
     }
