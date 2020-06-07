@@ -6,10 +6,11 @@
     <data>
         <variable
             name="lencseadat"
-            type="com.norbo.project.lencsenaplov2.data.model.Lencse" />
+            type="androidx.lifecycle.MutableLiveData&lt;Lencse>" />
         <variable
             name="action"
-            type="com.norbo.project.lencsenaplov2.ui.MainActivity.Action" />
+            type="com.norbo.project.lencsenaplov2.ui.utilts.actions.Actioner&lt;Lencse>" />
+        <import type="com.norbo.project.lencsenaplov2.data.model.Lencse"/>
         <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils"/>
     </data>
 
@@ -39,7 +40,9 @@
                     android:id="@+id/betetel_idoponja"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:text="@{FormatUtils.getDateString(lencseadat.betetelIdopont)}"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +51,9 @@
                     android:id="@+id/kivetel_idoponja"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{FormatUtils.getDateString(lencseadat.betetelIdopont)}"
+                    android:layout_margin="5dp"
+                    android:text="@{FormatUtils.getDateString(lencseadat.kivetelIdopont)}"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/betetel_idoponja" />
@@ -69,7 +74,7 @@
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:text="Kezdés"
-                        android:onClick="@{() -> action.betesz()}"/>
+                        android:onClick="@{() -> action.betesz(lencseadat)}"/>
 
                     <Button
                         android:id="@+id/btnBefejez"
@@ -79,10 +84,45 @@
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:text="Befejezés"
-                        android:onClick="@{() -> action.kivesz()}"/>
+                        android:onClick="@{() -> action.kivesz(lencseadat)}"/>
             </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_rec"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="25dp"
+            app:cardBackgroundColor="#01579B"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/lencsercview_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#000"
+                    android:padding="5dp"
+                    android:textColor="#fff" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lencsercview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

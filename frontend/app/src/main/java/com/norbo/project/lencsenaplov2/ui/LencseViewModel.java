@@ -16,15 +16,15 @@ import javax.inject.Singleton;
 @Singleton
 public class LencseViewModel extends ViewModel {
     private LencseRepository repository;
-    private MutableLiveData<List<Lencse>> lencseData;
+    private LiveData<List<Lencse>> lencseData;
 
     @Inject
     public LencseViewModel(LencseRepository repository) {
         this.repository = repository;
+        this.lencseData = repository.selectAll();
     }
 
     public LiveData<List<Lencse>> getLencseData() {
-        lencseData.setValue(repository.selectAll());
         return lencseData;
     }
 

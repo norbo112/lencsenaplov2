@@ -3,6 +3,7 @@ package com.norbo.project.lencsenaplov2.di;
 import android.content.Context;
 
 import com.norbo.project.lencsenaplov2.ui.MainActivity;
+import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
 
 import javax.inject.Singleton;
 
@@ -14,4 +15,6 @@ public interface ApplicationGraph {
     void inject(LencsenaploApplication lencsenaploApplication);
     void inject(MainActivity mainActivity);
     Context getContext();
+
+    void inject(MainAction mainAction);
 }

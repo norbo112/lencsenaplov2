@@ -1,5 +1,7 @@
 package com.norbo.project.lencsenaplov2.data.repositories;
 
+import androidx.lifecycle.LiveData;
+
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
@@ -31,7 +33,7 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
     }
 
     @Override
-    public List<Lencse> selectAll() {
-        return null;
+    public LiveData<List<Lencse>> selectAll() {
+        return lencseDatabase.lencseDao().selectAll();
     }
 }
