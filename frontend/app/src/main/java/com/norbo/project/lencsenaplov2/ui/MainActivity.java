@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements ClearLencse {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String LENCSE_ROGZITETT_IDO = "Rgido";
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
     private MutableLiveData<Long> currentTime;
