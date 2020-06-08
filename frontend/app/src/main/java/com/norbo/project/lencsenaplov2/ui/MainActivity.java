@@ -40,8 +40,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     @Inject
     LencseAdapterFactory lencseAdapterFactory;
 
-    private KezdoIdopont kezdoIdopont;
-
     public MainActivity() {
         super(R.layout.activity_main);
     }
@@ -59,10 +57,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
         if(savedInstanceState != null) {
             if(savedInstanceState.containsKey(LENCSE_SAVED_KEY)) {
                 lencseMutableLiveData.setValue((Lencse) savedInstanceState.getSerializable(LENCSE_SAVED_KEY));
-            }
-
-            if(savedInstanceState.containsKey(LENCSE_ROGZITETT_IDO)) {
-                currentTime.setValue((Long) savedInstanceState.getSerializable(LENCSE_ROGZITETT_IDO));
             }
         }
 
@@ -90,7 +84,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
             @Override
             public void onChanged(KezdoIdopont kezdoIdopont) {
                 if(kezdoIdopont != null) {
-                    MainActivity.this.kezdoIdopont = kezdoIdopont;
                     Lencse value = lencseMutableLiveData.getValue();
                     value.setBetetelIdopont(kezdoIdopont.getKezdoIdopont());
                     lencseMutableLiveData.postValue(value);
@@ -103,13 +96,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     @Override
     protected void onResume() {
         super.onResume();
-        if(kezdoIdopont != null) currentTime.postValue(kezdoIdopont.getKezdoIdopont());
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         outState.putSerializable(LENCSE_SAVED_KEY, lencseMutableLiveData.getValue());
-        outState.putSerializable(LENCSE_ROGZITETT_IDO, kezdoIdopont);
         super.onSaveInstanceState(outState, outPersistentState);
         Log.i(TAG, "onSaveInstanceState: lefutott");
     }
