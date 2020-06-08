@@ -117,6 +117,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
         }
 
         @Override
+        public synchronized void start() {
+            super.start();
+            futas.set(true);
+        }
+
+        @Override
         public void interrupt() {
             super.interrupt();
             futas.set(false);
