@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.norbo.project.lencsenaplov2.R;
+import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
@@ -22,19 +23,24 @@ import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements ClearLencse {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String LENCSE_ROGZITETT_IDO = "Rgido";
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
+    private MutableLiveData<Long> currentTime;
 
     @Inject
     LencseViewModel viewModel;
 
     @Inject
     LencseAdapterFactory lencseAdapterFactory;
+
+    private KezdoIdopont kezdoIdopont;
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -46,15 +52,24 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
         super.onCreate(savedInstanceState);
 
         lencseMutableLiveData = new MutableLiveData<>();
+        currentTime = new MutableLiveData<>();
+        currentTime.setValue(System.currentTimeMillis());
         lencseMutableLiveData.setValue(new Lencse());
 
-        if(savedInstanceState != null && savedInstanceState.containsKey(LENCSE_SAVED_KEY)) {
-            lencseMutableLiveData.setValue((Lencse) savedInstanceState.getSerializable(LENCSE_SAVED_KEY));
+        if(savedInstanceState != null) {
+            if(savedInstanceState.containsKey(LENCSE_SAVED_KEY)) {
+                lencseMutableLiveData.setValue((Lencse) savedInstanceState.getSerializable(LENCSE_SAVED_KEY));
+            }
+
+            if(savedInstanceState.containsKey(LENCSE_ROGZITETT_IDO)) {
+                currentTime.setValue((Long) savedInstanceState.getSerializable(LENCSE_ROGZITETT_IDO));
+            }
         }
 
         binding.setLifecycleOwner(this);
         binding.setLencseadat(lencseMutableLiveData);
         binding.setAction(new MainAction(this));
+        binding.setElapsedtime(currentTime);
 
         viewModel.getLencseData().observe(this, new Observer<List<Lencse>>() {
             @SuppressLint("SetTextI18n")
@@ -70,12 +85,33 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
                 }
             }
         });
+
+        viewModel.getKezdoIdopont().observe(this, new Observer<KezdoIdopont>() {
+            @Override
+            public void onChanged(KezdoIdopont kezdoIdopont) {
+                if(kezdoIdopont != null) {
+                    MainActivity.this.kezdoIdopont = kezdoIdopont;
+                    Lencse value = lencseMutableLiveData.getValue();
+                    value.setBetetelIdopont(kezdoIdopont.getKezdoIdopont());
+                    lencseMutableLiveData.postValue(value);
+                    currentTime.postValue(System.currentTimeMillis());
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(kezdoIdopont != null) currentTime.postValue(kezdoIdopont.getKezdoIdopont());
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         outState.putSerializable(LENCSE_SAVED_KEY, lencseMutableLiveData.getValue());
+        outState.putSerializable(LENCSE_ROGZITETT_IDO, kezdoIdopont);
         super.onSaveInstanceState(outState, outPersistentState);
+        Log.i(TAG, "onSaveInstanceState: lefutott");
     }
 
     @Override

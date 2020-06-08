@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
+import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 
 import java.util.List;
@@ -24,11 +25,23 @@ public class LencseViewModel extends ViewModel {
         this.lencseData = repository.selectAll();
     }
 
+    public LiveData<KezdoIdopont> getKezdoIdopont() {
+        return repository.selectKezdoIdopont();
+    }
+
     public LiveData<List<Lencse>> getLencseData() {
         return lencseData;
     }
 
     public Future<Long> insert(Lencse lencse) {
         return repository.insert(lencse);
+    }
+
+    public Future<Long> insertKezdoIdopont(KezdoIdopont kezdoIdopont) {
+        return repository.insert(kezdoIdopont);
+    }
+
+    public void deleteKezdoIdopont(long betetelIdopont) {
+        repository.deleteKezdoIdopont(betetelIdopont);
     }
 }

@@ -3,6 +3,7 @@ package com.norbo.project.lencsenaplov2.data.repositories;
 import androidx.lifecycle.LiveData;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
+import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 
@@ -33,7 +34,32 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
     }
 
     @Override
+    public Future<Long> insert(final KezdoIdopont kezdoIdopont) {
+        return LencseDatabase.executor.submit(new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                return lencseDatabase.kezdoIdopontDao().insert(kezdoIdopont);
+            }
+        });
+    }
+
+    @Override
     public LiveData<List<Lencse>> selectAll() {
         return lencseDatabase.lencseDao().selectAll();
+    }
+
+    @Override
+    public LiveData<KezdoIdopont> selectKezdoIdopont() {
+        return lencseDatabase.kezdoIdopontDao().select();
+    }
+
+    @Override
+    public void deleteKezdoIdopont(final long betetelIdopont) {
+        LencseDatabase.executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                lencseDatabase.kezdoIdopontDao().delete(betetelIdopont);
+            }
+        });
     }
 }
