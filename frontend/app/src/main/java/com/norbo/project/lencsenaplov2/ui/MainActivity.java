@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.norbo.project.lencsenaplov2.R;
+import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements ClearLencse {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String LENCSE_ROGZITETT_IDO = "Rgido";
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
     private MutableLiveData<Long> currentTime;
@@ -52,16 +54,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
         currentTime.setValue(System.currentTimeMillis());
         lencseMutableLiveData.setValue(new Lencse());
 
-        if(savedInstanceState != null && savedInstanceState.containsKey(LENCSE_SAVED_KEY)) {
-            lencseMutableLiveData.setValue((Lencse) savedInstanceState.getSerializable(LENCSE_SAVED_KEY));
+        if(savedInstanceState != null) {
+            if(savedInstanceState.containsKey(LENCSE_SAVED_KEY)) {
+                lencseMutableLiveData.setValue((Lencse) savedInstanceState.getSerializable(LENCSE_SAVED_KEY));
+            }
         }
 
         binding.setLifecycleOwner(this);
         binding.setLencseadat(lencseMutableLiveData);
         binding.setAction(new MainAction(this));
         binding.setElapsedtime(currentTime);
-
-        elapsedTimeThread.start();
 
         viewModel.getLencseData().observe(this, new Observer<List<Lencse>>() {
             @SuppressLint("SetTextI18n")
@@ -77,18 +79,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
                 }
             }
         });
+
+        viewModel.getKezdoIdopont().observe(this, new Observer<KezdoIdopont>() {
+            @Override
+            public void onChanged(KezdoIdopont kezdoIdopont) {
+                if(kezdoIdopont != null) {
+                    Lencse value = lencseMutableLiveData.getValue();
+                    value.setBetetelIdopont(kezdoIdopont.getKezdoIdopont());
+                    lencseMutableLiveData.postValue(value);
+                    currentTime.postValue(System.currentTimeMillis());
+                }
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(elapsedTimeThread.isInterrupted()) elapsedTimeThread.start();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        elapsedTimeThread.interrupt();
     }
 
     @Override
@@ -101,31 +108,4 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     public void clearLencseUi() {
         lencseMutableLiveData.postValue(new Lencse());
     }
-
-    private Thread elapsedTimeThread = new Thread(){
-        private final AtomicBoolean futas = new AtomicBoolean(true);
-        @Override
-        public void run() {
-            while(futas.get()) {
-                currentTime.postValue(System.currentTimeMillis());
-                try {
-                    Thread.sleep(1000 * 60);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        @Override
-        public synchronized void start() {
-            super.start();
-            futas.set(true);
-        }
-
-        @Override
-        public void interrupt() {
-            super.interrupt();
-            futas.set(false);
-        }
-    };
 }

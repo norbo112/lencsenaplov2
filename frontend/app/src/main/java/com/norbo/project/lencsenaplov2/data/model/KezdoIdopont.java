@@ -1,19 +1,29 @@
 package com.norbo.project.lencsenaplov2.data.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
-@Entity
-public class KezdoIdopont {
-    private String kezdoIdopont;
+import java.io.Serializable;
+
+@Entity(tableName = "kezdoidopont_table")
+public class KezdoIdopont implements Serializable {
+    @PrimaryKey
+    private long kezdoIdopont;
 
     public KezdoIdopont() {
     }
 
-    public String getKezdoIdopont() {
+    @Ignore
+    public KezdoIdopont(long kezdoIdopont) {
+        this.kezdoIdopont = kezdoIdopont;
+    }
+
+    public long getKezdoIdopont() {
         return kezdoIdopont;
     }
 
-    public void setKezdoIdopont(String kezdoIdopont) {
+    public void setKezdoIdopont(long kezdoIdopont) {
         this.kezdoIdopont = kezdoIdopont;
     }
 }
