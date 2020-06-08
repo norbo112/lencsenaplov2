@@ -22,6 +22,7 @@ import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
+    private MutableLiveData<Long> currentTime;
 
     @Inject
     LencseViewModel viewModel;
@@ -46,6 +48,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
         super.onCreate(savedInstanceState);
 
         lencseMutableLiveData = new MutableLiveData<>();
+        currentTime = new MutableLiveData<>();
+        currentTime.setValue(System.currentTimeMillis());
         lencseMutableLiveData.setValue(new Lencse());
 
         if(savedInstanceState != null && savedInstanceState.containsKey(LENCSE_SAVED_KEY)) {
@@ -55,6 +59,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
         binding.setLifecycleOwner(this);
         binding.setLencseadat(lencseMutableLiveData);
         binding.setAction(new MainAction(this));
+        binding.setElapsedtime(currentTime);
+
+        elapsedTimeThread.start();
 
         viewModel.getLencseData().observe(this, new Observer<List<Lencse>>() {
             @SuppressLint("SetTextI18n")
@@ -73,6 +80,18 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(elapsedTimeThread.isInterrupted()) elapsedTimeThread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        elapsedTimeThread.interrupt();
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         outState.putSerializable(LENCSE_SAVED_KEY, lencseMutableLiveData.getValue());
         super.onSaveInstanceState(outState, outPersistentState);
@@ -82,4 +101,25 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     public void clearLencseUi() {
         lencseMutableLiveData.postValue(new Lencse());
     }
+
+    private Thread elapsedTimeThread = new Thread(){
+        private final AtomicBoolean futas = new AtomicBoolean(true);
+        @Override
+        public void run() {
+            while(futas.get()) {
+                currentTime.postValue(System.currentTimeMillis());
+                try {
+                    Thread.sleep(1000 * 60);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void interrupt() {
+            super.interrupt();
+            futas.set(false);
+        }
+    };
 }

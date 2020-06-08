@@ -8,10 +8,14 @@
             name="lencseadat"
             type="androidx.lifecycle.MutableLiveData&lt;Lencse>" />
         <variable
+            name="elapsedtime"
+            type="androidx.lifecycle.MutableLiveData&lt;Long>" />
+        <variable
             name="action"
             type="com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction" />
         <import type="com.norbo.project.lencsenaplov2.data.model.Lencse"/>
         <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils"/>
+        <import type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,12 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
-            app:cardBackgroundColor="#01579B"
             app:cardCornerRadius="15dp"
             app:cardElevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardBackgroundColor="#901A237E">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -48,39 +52,55 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <TextView
-                    android:id="@+id/betetel_idoponja"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/kijelzo_linear_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@{FormatUtils.getDateString(lencseadat.betetelIdopont)}"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textColor="#FFFFFF"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vezerlo_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/vezerlo_title">
 
-                <TextView
-                    android:id="@+id/kivetel_idoponja"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@{FormatUtils.getDateString(lencseadat.kivetelIdopont)}"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                    android:textColor="#FFFFFF"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/betetel_idoponja" />
+
+                    <TextView
+                        android:id="@+id/betetel_idoponja"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@{FormatUtils.getDateString(lencseadat.betetelIdopont)}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/kivetel_idoponja"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@{FormatUtils.getDateString(lencseadat.kivetelIdopont)}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/eltelt_ido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@{DataUtils.elapsedTime(lencseadat.betetelIdopont, elapsedtime)}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:background="#01579B"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/kivetel_idoponja">
+                    app:layout_constraintTop_toBottomOf="@+id/kijelzo_linear_layout">
 
                     <Button
                         android:id="@+id/btnElkezd"
@@ -89,8 +109,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:text="Kezdés"
-                        android:onClick="@{() -> action.betesz(lencseadat)}"/>
+                        android:onClick="@{() -> action.betesz(lencseadat)}"
+                        android:text="Kezdés" />
 
                     <Button
                         android:id="@+id/btnBefejez"
@@ -99,9 +119,9 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:text="Befejezés"
-                        android:onClick="@{() -> action.kivesz(lencseadat)}"/>
-            </LinearLayout>
+                        android:onClick="@{() -> action.kivesz(lencseadat)}"
+                        android:text="Befejezés" />
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -109,8 +129,8 @@
             android:id="@+id/card_view_rec"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="25dp"
-            app:cardBackgroundColor="#01579B"
+            android:layout_margin="15dp"
+            app:cardBackgroundColor="#8301579B"
             app:cardCornerRadius="15dp"
             app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
