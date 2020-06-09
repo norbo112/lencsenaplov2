@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
     private MutableLiveData<Long> currentTime;
+    private KezdoIdopont mainKezdoIdopont;
 
     @Inject
     LencseViewModel viewModel;
@@ -83,6 +84,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
             @Override
             public void onChanged(KezdoIdopont kezdoIdopont) {
                 if(kezdoIdopont != null) {
+                    mainKezdoIdopont = kezdoIdopont;
                     Lencse value = lencseMutableLiveData.getValue();
                     value.setBetetelIdopont(kezdoIdopont.getKezdoIdopont());
                     lencseMutableLiveData.postValue(value);
@@ -95,6 +97,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     @Override
     protected void onResume() {
         super.onResume();
+        if(mainKezdoIdopont != null) currentTime.postValue(System.currentTimeMillis());
     }
 
     @Override
