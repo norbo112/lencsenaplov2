@@ -14,20 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
-import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
-import com.norbo.project.lencsenaplov2.ui.utilts.ClearLencse;
+import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
 import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> implements ClearLencse {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements UpdateLencseUI {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
@@ -111,4 +108,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements C
     public void clearLencseUi() {
         lencseMutableLiveData.postValue(new Lencse());
     }
+
 }

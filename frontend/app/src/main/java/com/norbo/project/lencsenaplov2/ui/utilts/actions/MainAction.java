@@ -1,7 +1,10 @@
 package com.norbo.project.lencsenaplov2.ui.utilts.actions;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,21 +12,29 @@ import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
-import com.norbo.project.lencsenaplov2.ui.utilts.ClearLencse;
+import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
+
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.inject.Inject;
 
 public class MainAction {
     private static final String TAG = MainAction.class.getSimpleName();
-    private ClearLencse clearLencse;
-
-    public MainAction(Context context) {
-        ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
-        this.clearLencse = (ClearLencse) context;
-    }
+    private UpdateLencseUI updateLencseUI;
+    private Context context;
 
     @Inject
     LencseViewModel lencseViewModel;
+
+    public MainAction(Context context) {
+        ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
+        this.updateLencseUI = (UpdateLencseUI) context;
+        this.context = context;
+    }
+
+
 
     public void betesz(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
@@ -46,7 +57,29 @@ public class MainAction {
         lencseMutableLiveData.postValue(value);
         lencseViewModel.insert(value);
         lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
-        clearLencse.clearLencseUi();
+        updateLencseUI.clearLencseUi();
         Log.i(TAG, "kivesz: lefutott");
+    }
+
+    public void setLencseUjIdopont(MutableLiveData<Lencse> lencseadat) {
+        final Lencse value = lencseadat.getValue();
+        if(value == null || value.getBetetelIdopont() == 0) {
+            return;
+        }
+
+        final Date date = new Date(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                date.setHours(hourOfDay);
+                date.setMinutes(minute);
+                lencseViewModel.deleteKezdoIdopont(lencseadat.getValue().getBetetelIdopont());
+                lencseViewModel.insertKezdoIdopont(new KezdoIdopont(date.getTime()));
+                lencseadat.getValue().setBetetelIdopont(date.getTime());
+            }
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+
+        timePickerDialog.show();
     }
 }

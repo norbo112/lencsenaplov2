@@ -6,14 +6,14 @@ import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 public interface LencseRepository {
-    Future<Long> insert(Lencse lencse);
+    CompletableFuture<Long> insert(Lencse lencse);
     LiveData<List<Lencse>> selectAll();
 
     LiveData<KezdoIdopont> selectKezdoIdopont();
-    Future<Long> insert(KezdoIdopont kezdoIdopont);
+    CompletableFuture<Long> insert(KezdoIdopont kezdoIdopont);
 
     void deleteKezdoIdopont(long betetelIdopont);
 }

@@ -9,7 +9,7 @@ import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,22 +24,16 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
     }
 
     @Override
-    public Future<Long> insert(final Lencse lencse) {
-        return LencseDatabase.executor.submit(new Callable<Long>() {
-            @Override
-            public Long call() throws Exception {
-                return lencseDatabase.lencseDao().insert(lencse);
-            }
+    public CompletableFuture<Long> insert(final Lencse lencse) {
+        return CompletableFuture.supplyAsync(() -> {
+            return lencseDatabase.lencseDao().insert(lencse);
         });
     }
 
     @Override
-    public Future<Long> insert(final KezdoIdopont kezdoIdopont) {
-        return LencseDatabase.executor.submit(new Callable<Long>() {
-            @Override
-            public Long call() throws Exception {
-                return lencseDatabase.kezdoIdopontDao().insert(kezdoIdopont);
-            }
+    public CompletableFuture<Long> insert(final KezdoIdopont kezdoIdopont) {
+        return CompletableFuture.supplyAsync(()-> {
+            return lencseDatabase.kezdoIdopontDao().insert(kezdoIdopont);
         });
     }
 

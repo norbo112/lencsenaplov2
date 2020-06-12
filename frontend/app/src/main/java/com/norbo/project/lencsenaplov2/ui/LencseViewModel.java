@@ -9,6 +9,7 @@ import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
@@ -33,11 +34,11 @@ public class LencseViewModel extends ViewModel {
         return lencseData;
     }
 
-    public Future<Long> insert(Lencse lencse) {
+    public CompletableFuture<Long> insert(Lencse lencse) {
         return repository.insert(lencse);
     }
 
-    public Future<Long> insertKezdoIdopont(KezdoIdopont kezdoIdopont) {
+    public CompletableFuture<Long> insertKezdoIdopont(KezdoIdopont kezdoIdopont) {
         return repository.insert(kezdoIdopont);
     }
 
