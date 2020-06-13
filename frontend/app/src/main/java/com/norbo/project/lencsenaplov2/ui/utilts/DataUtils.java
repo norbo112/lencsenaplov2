@@ -13,4 +13,10 @@ public class DataUtils {
         long perc0 = duration.toMinutes() % 60;
         return ora+" óra és "+ perc0+" perc";
     }
+
+    public static float elapsedTimeFloat(long begin, long end) {
+        Duration duration = Duration.between(Instant.ofEpochMilli(begin),
+                Instant.ofEpochMilli(end));
+        return duration.toMinutes();
+    }
 }

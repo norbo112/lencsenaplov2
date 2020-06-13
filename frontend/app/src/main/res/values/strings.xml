@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Lencsenapló v2</string>
+    <string name="diagram_menu_label">Diagram</string>
 </resources>

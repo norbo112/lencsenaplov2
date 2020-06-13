@@ -1,9 +1,12 @@
 package com.norbo.project.lencsenaplov2.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -41,10 +44,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
         super(R.layout.activity_main);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ((LencsenaploApplication)getApplicationContext()).getGraph().inject(this);
         super.onCreate(savedInstanceState);
+
+        setSupportActionBar(binding.toolbar);
 
         lencseMutableLiveData = new MutableLiveData<>();
         currentTime = new MutableLiveData<>();
@@ -62,31 +68,24 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
         binding.setAction(new MainAction(this));
         binding.setElapsedtime(currentTime);
 
-        viewModel.getLencseData().observe(this, new Observer<List<Lencse>>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onChanged(List<Lencse> lencseList) {
-                if(lencseList.size() != 0) {
-                    binding.lencsercviewTitle.setText(lencseList.size()+" lencseadat rögzítve");
-                    binding.lencsercview.setAdapter(lencseAdapterFactory.create(MainActivity.this, lencseList));
-                    binding.lencsercview.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    binding.lencsercview.setItemAnimator(new DefaultItemAnimator());
-                } else {
-                    binding.lencsercviewTitle.setText("Nincsenek adatok rögzítve");
-                }
+        viewModel.getLencseData().observe(this, lencseList -> {
+            if(lencseList.size() != 0) {
+                binding.lencsercviewTitle.setText(lencseList.size()+" lencseadat rögzítve");
+                binding.lencsercview.setAdapter(lencseAdapterFactory.create(MainActivity.this, lencseList));
+                binding.lencsercview.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                binding.lencsercview.setItemAnimator(new DefaultItemAnimator());
+            } else {
+                binding.lencsercviewTitle.setText("Nincsenek adatok rögzítve");
             }
         });
 
-        viewModel.getKezdoIdopont().observe(this, new Observer<KezdoIdopont>() {
-            @Override
-            public void onChanged(KezdoIdopont kezdoIdopont) {
-                if(kezdoIdopont != null) {
-                    mainKezdoIdopont = kezdoIdopont;
-                    Lencse value = lencseMutableLiveData.getValue();
-                    value.setBetetelIdopont(kezdoIdopont.getKezdoIdopont());
-                    lencseMutableLiveData.postValue(value);
-                    currentTime.postValue(System.currentTimeMillis());
-                }
+        viewModel.getKezdoIdopont().observe(this, kezdoIdopont -> {
+            if(kezdoIdopont != null) {
+                mainKezdoIdopont = kezdoIdopont;
+                Lencse value = lencseMutableLiveData.getValue();
+                value.setBetetelIdopont(kezdoIdopont.getKezdoIdopont());
+                lencseMutableLiveData.postValue(value);
+                currentTime.postValue(System.currentTimeMillis());
             }
         });
     }
@@ -109,4 +108,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
         lencseMutableLiveData.postValue(new Lencse());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.menu_diagram) {
+            startActivity(new Intent(this, ReportActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

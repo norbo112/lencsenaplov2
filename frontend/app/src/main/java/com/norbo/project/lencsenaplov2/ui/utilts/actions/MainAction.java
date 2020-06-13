@@ -4,7 +4,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -14,7 +13,6 @@ import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,8 +31,6 @@ public class MainAction {
         this.updateLencseUI = (UpdateLencseUI) context;
         this.context = context;
     }
-
-
 
     public void betesz(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
