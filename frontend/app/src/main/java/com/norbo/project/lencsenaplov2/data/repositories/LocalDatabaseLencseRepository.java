@@ -3,12 +3,11 @@ package com.norbo.project.lencsenaplov2.data.repositories;
 import androidx.lifecycle.LiveData;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
-import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
-import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
+import com.norbo.project.lencsenaplov2.db.entities.KezdoIdopontEntity;
+import com.norbo.project.lencsenaplov2.db.entities.LencseEntity;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 
 import javax.inject.Inject;
@@ -24,26 +23,26 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
     }
 
     @Override
-    public CompletableFuture<Long> insert(final Lencse lencse) {
+    public CompletableFuture<Long> insert(final LencseEntity lencse) {
         return CompletableFuture.supplyAsync(() -> {
             return lencseDatabase.lencseDao().insert(lencse);
         });
     }
 
     @Override
-    public CompletableFuture<Long> insert(final KezdoIdopont kezdoIdopont) {
+    public CompletableFuture<Long> insert(final KezdoIdopontEntity kezdoIdopont) {
         return CompletableFuture.supplyAsync(()-> {
             return lencseDatabase.kezdoIdopontDao().insert(kezdoIdopont);
         });
     }
 
     @Override
-    public LiveData<List<Lencse>> selectAll() {
+    public LiveData<List<LencseEntity>> selectAll() {
         return lencseDatabase.lencseDao().selectAll();
     }
 
     @Override
-    public LiveData<KezdoIdopont> selectKezdoIdopont() {
+    public LiveData<KezdoIdopontEntity> selectKezdoIdopont() {
         return lencseDatabase.kezdoIdopontDao().select();
     }
 

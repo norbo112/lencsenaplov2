@@ -1,16 +1,29 @@
-package com.norbo.project.lencsenaplov2.data.model;
+package com.norbo.project.lencsenaplov2.db.entities;
+
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-public class Lencse implements Serializable {
+@Entity(tableName = "lencse_table")
+public class LencseEntity implements Serializable {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private long betetelIdopont;
     private long kivetelIdopont;
 
-    public Lencse() {
+    public LencseEntity() {
     }
 
-    public Lencse(int id, long betetelIdopont, long kivetelIdopont) {
+    @Ignore
+    public LencseEntity(long betetelIdopont, long kivetelIdopont) {
+        this.betetelIdopont = betetelIdopont;
+        this.kivetelIdopont = kivetelIdopont;
+    }
+
+    @Ignore
+    public LencseEntity(int id, long betetelIdopont, long kivetelIdopont) {
         this.id = id;
         this.betetelIdopont = betetelIdopont;
         this.kivetelIdopont = kivetelIdopont;

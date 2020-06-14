@@ -4,16 +4,18 @@ import androidx.lifecycle.LiveData;
 
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
+import com.norbo.project.lencsenaplov2.db.entities.KezdoIdopontEntity;
+import com.norbo.project.lencsenaplov2.db.entities.LencseEntity;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface LencseRepository {
-    CompletableFuture<Long> insert(Lencse lencse);
-    LiveData<List<Lencse>> selectAll();
+    CompletableFuture<Long> insert(LencseEntity lencse);
+    LiveData<List<LencseEntity>> selectAll();
 
-    LiveData<KezdoIdopont> selectKezdoIdopont();
-    CompletableFuture<Long> insert(KezdoIdopont kezdoIdopont);
+    LiveData<KezdoIdopontEntity> selectKezdoIdopont();
+    CompletableFuture<Long> insert(KezdoIdopontEntity kezdoIdopont);
 
     void deleteKezdoIdopont(long betetelIdopont);
 }

@@ -8,6 +8,7 @@ import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 import com.norbo.project.lencsenaplov2.db.dao.LencseDao;
+import com.norbo.project.lencsenaplov2.ui.utilts.ConvertEntities;
 
 import javax.inject.Singleton;
 
@@ -34,6 +35,12 @@ public class FirstModule {
         return Room.databaseBuilder(context, LencseDatabase.class, LencseDatabase.DB_NAME)
                 .fallbackToDestructiveMigration()
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    ConvertEntities provideConvertEntities() {
+        return new ConvertEntities();
     }
 
     @Singleton
