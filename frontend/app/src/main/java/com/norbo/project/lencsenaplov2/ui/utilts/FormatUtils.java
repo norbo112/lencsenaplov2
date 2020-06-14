@@ -11,6 +11,8 @@ public class FormatUtils {
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd. EEE.");
     @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat dayshortFORMAT = new SimpleDateFormat("MM.dd.");
+    @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
 
@@ -33,5 +35,9 @@ public class FormatUtils {
             return "Nincs időpont rögzítve";
         }
         return dateFormat.format(new Date(timestamp));
+    }
+
+    public static String getDayShortFormat(long timestamp) {
+        return dayshortFORMAT.format(new Date(timestamp));
     }
 }

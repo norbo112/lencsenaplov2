@@ -6,13 +6,19 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.norbo.project.lencsenaplov2.R;
@@ -20,14 +26,17 @@ import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
+import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 public class ReportActivity extends BaseActivity<ActivityReportBinding> implements OnChartValueSelectedListener {
+    private static final String TAG = "ReportActivity";
     public ReportActivity() {
         super(R.layout.activity_report);
     }
@@ -54,10 +63,31 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         chart.setOnChartValueSelectedListener(this);
         chart.setDrawGridBackground(false);
 
+        YAxis yAxis = chart.getAxisLeft();
+        yAxis.setTextColor(Color.WHITE);
+        yAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                return (int)value / 60 + "h";
+            }
+        });
+        chart.getAxisRight().setEnabled(false);
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+        xAxis.setEnabled(true);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) { ;
+                return FormatUtils.getDayShortFormat(list.get((int)value).getBetetelIdopont());
+            }
+        });
+
         setCharData(chart, list);
         chart.animateX(1500);
-        Legend l = chart.getLegend();
-        l.setForm(Legend.LegendForm.LINE);
+
+        chart.getLegend().setEnabled(false);
     }
 
     private void setCharData(LineChart lineChart, List<Lencse> lencseList) {
@@ -66,7 +96,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
             entries.add(new Entry(i,
                     DataUtils.elapsedTimeFloat(
                             lencseList.get(i).getBetetelIdopont(),
-                            lencseList.get(i).getKivetelIdopont()), lencseList.get(i)));
+                            lencseList.get(i).getKivetelIdopont()),
+                    lencseList.get(i)));
         }
 
         LineDataSet set;
@@ -81,7 +112,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
             set = new LineDataSet(entries, "Eltelt idő");
             set.setDrawIcons(false);
             set.enableDashedLine(10f, 5f, 0f);
-            set.setColor(Color.BLACK);
+            set.setColor(Color.WHITE);
+            set.setCircleColor(Color.GREEN);
             set.setLineWidth(1f);
             set.setCircleRadius(3f);
             set.setCircleHoleRadius(3f);
