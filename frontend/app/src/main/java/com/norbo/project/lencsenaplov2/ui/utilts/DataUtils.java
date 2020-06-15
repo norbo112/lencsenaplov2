@@ -11,7 +11,7 @@ public class DataUtils {
                 Instant.ofEpochMilli(end));
         long ora = duration.toMinutes() / 60;
         long perc0 = duration.toMinutes() % 60;
-        return ora+" óra és "+ perc0+" perc";
+        return "Eltelt idő: "+ora+" óra és "+ perc0+" perc";
     }
 
     public static float elapsedTimeFloat(long begin, long end) {

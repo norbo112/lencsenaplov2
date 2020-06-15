@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="lencseadat"
             type="com.norbo.project.lencsenaplov2.data.model.Lencse" />
-        <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils"/>
-        <import type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils"/>
+
+        <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils" />
+
+        <import type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils" />
     </data>
 
     <LinearLayout
@@ -14,42 +18,69 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:background="@color/lencse_item_gb_2"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/nap"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:padding="5dp"
             android:text="@{FormatUtils.getDayString(lencseadat.betetelIdopont)}"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
-        <TextView
-            android:id="@+id/betetel"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:text="@{FormatUtils.getTimeString(lencseadat.betetelIdopont)}"
-            android:textSize="12sp" />
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:background="#fff">
 
-        <TextView
-            android:id="@+id/kivetel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:text="@{FormatUtils.getTimeString(lencseadat.kivetelIdopont)}"
-            android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/lencse_list_be_label"
+                app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+            <TextView
+                android:id="@+id/betetel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="@{FormatUtils.getTimeString(lencseadat.betetelIdopont)}"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/lencse_list_ki_label"
+                app:srcCompat="@drawable/ic_baseline_arrow_drop_up_24" />
+
+            <TextView
+                android:id="@+id/kivetel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="@{FormatUtils.getTimeString(lencseadat.kivetelIdopont)}"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/elteltido"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:padding="5dp"
             android:text="@{DataUtils.elapsedTime(lencseadat.betetelIdopont, lencseadat.kivetelIdopont)}"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
     </LinearLayout>
 </layout>

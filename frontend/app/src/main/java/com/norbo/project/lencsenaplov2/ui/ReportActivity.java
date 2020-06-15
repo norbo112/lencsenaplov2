@@ -130,7 +130,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     public void onValueSelected(Entry e, Highlight h) {
         String elteltido = DataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
                 ((Lencse)e.getData()).getKivetelIdopont());
-        Toast.makeText(this,  "Eltelt idő: "+elteltido, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,  elteltido, Toast.LENGTH_SHORT).show();
     }
 
     @Override
