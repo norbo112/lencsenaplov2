@@ -8,6 +8,7 @@ import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 import com.norbo.project.lencsenaplov2.ui.utilts.ConvertEntities;
+import com.norbo.project.lencsenaplov2.ui.utilts.MyToaster;
 
 import javax.inject.Singleton;
 
@@ -41,6 +42,12 @@ public class FirstModule {
     @Provides
     ConvertEntities provideConvertEntities() {
         return new ConvertEntities();
+    }
+
+    @Singleton
+    @Provides
+    MyToaster provideMyToaster(Context context) {
+        return new MyToaster(context);
     }
 
     @Singleton

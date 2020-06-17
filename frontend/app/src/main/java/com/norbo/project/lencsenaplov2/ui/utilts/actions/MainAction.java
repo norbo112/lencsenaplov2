@@ -3,6 +3,7 @@ package com.norbo.project.lencsenaplov2.ui.utilts.actions;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.widget.TimePicker;
 
 import androidx.lifecycle.MutableLiveData;
@@ -11,6 +12,7 @@ import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
+import com.norbo.project.lencsenaplov2.ui.utilts.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
 
 import java.util.Calendar;
@@ -25,6 +27,9 @@ public class MainAction {
 
     @Inject
     LencseViewModel lencseViewModel;
+
+    @Inject
+    MyToaster myToaster;
 
     public MainAction(Context context) {
         ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
@@ -49,7 +54,7 @@ public class MainAction {
             value.setKivetelIdopont(System.currentTimeMillis());
 
             lencseMutableLiveData.postValue(value);
-            lencseViewModel.insert(value).whenComplete((id, throwable) -> Log.i(TAG, "kivesz: lencseadat rögzítve: "+id));
+            lencseViewModel.insert(value).whenComplete((id, throwable) -> myToaster.show("Lencseadat rögzítve: "+id));
             lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
             updateLencseUI.clearLencseUi();
         }
