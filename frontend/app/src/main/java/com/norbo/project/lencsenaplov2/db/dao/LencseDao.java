@@ -14,6 +14,6 @@ public interface LencseDao {
     @Insert
     long insert(LencseEntity lencse);
 
-    @Query("SELECT * FROM lencse_table ORDER BY betetelIdopont DESC")
+    @Query("SELECT * FROM lencse_table")
     LiveData<List<LencseEntity>> selectAll();
 }

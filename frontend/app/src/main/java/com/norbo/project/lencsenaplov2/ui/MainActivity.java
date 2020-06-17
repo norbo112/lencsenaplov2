@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -23,7 +22,7 @@ import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
 import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
 import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
 
-import java.util.List;
+import java.util.Collections;
 
 import javax.inject.Inject;
 
@@ -70,6 +69,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
 
         viewModel.getLencseData().observe(this, lencseList -> {
             if(lencseList.size() != 0) {
+                Collections.sort(lencseList,
+                        ((o1, o2) -> Long.compare(o2.getBetetelIdopont(), o1.getBetetelIdopont())));
                 binding.lencsercviewTitle.setText(lencseList.size()+" lencseadat rögzítve");
                 binding.lencsercview.setAdapter(lencseAdapterFactory.create(MainActivity.this, lencseList));
                 binding.lencsercview.setLayoutManager(new LinearLayoutManager(MainActivity.this));
