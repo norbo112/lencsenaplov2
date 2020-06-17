@@ -23,6 +23,7 @@ import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,6 +46,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewModel.getLencseData().observe(this, (lencseList) -> {
+            Collections.sort(lencseList,
+                    ((o1, o2) -> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont())));
             initChart(binding.chart, lencseList);
         });
     }
