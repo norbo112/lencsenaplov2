@@ -19,9 +19,10 @@ public class LencseEntity implements Serializable {
     }
 
     @Ignore
-    public LencseEntity(long betetelIdopont, long kivetelIdopont) {
+    public LencseEntity(long betetelIdopont, long kivetelIdopont, int tisztitoViz) {
         this.betetelIdopont = betetelIdopont;
         this.kivetelIdopont = kivetelIdopont;
+        this.tisztitoViz = tisztitoViz;
     }
 
     @Ignore
