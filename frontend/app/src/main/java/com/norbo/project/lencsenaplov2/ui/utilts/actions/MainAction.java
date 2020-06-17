@@ -49,7 +49,7 @@ public class MainAction {
             value.setKivetelIdopont(System.currentTimeMillis());
 
             lencseMutableLiveData.postValue(value);
-            lencseViewModel.insert(value);
+            lencseViewModel.insert(value).whenComplete((id, throwable) -> Log.i(TAG, "kivesz: lencseadat rögzítve: "+id));
             lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
             updateLencseUI.clearLencseUi();
         }
