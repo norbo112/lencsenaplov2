@@ -40,10 +40,7 @@ public class MainAction {
 
             lencseViewModel.insertKezdoIdopont(new KezdoIdopont(value.getBetetelIdopont()));
             Log.i(TAG, "betesz: lefutott");
-        } else  {
-            return;
         }
-
     }
 
     public void kivesz(MutableLiveData<Lencse> lencseMutableLiveData) {
