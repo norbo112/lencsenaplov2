@@ -1,18 +1,12 @@
 package com.norbo.project.lencsenaplov2.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -28,10 +22,8 @@ import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
