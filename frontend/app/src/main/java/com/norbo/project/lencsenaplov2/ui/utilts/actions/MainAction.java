@@ -45,12 +45,15 @@ public class MainAction {
 
     public void kivesz(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
-        if(value != null && value.getKivetelIdopont() == 0 && value.getBetetelIdopont() != 0) value.setKivetelIdopont(System.currentTimeMillis());
-        else return;
-        lencseMutableLiveData.postValue(value);
-        lencseViewModel.insert(value);
-        lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
-        updateLencseUI.clearLencseUi();
+        if(value != null && value.getKivetelIdopont() == 0 && value.getBetetelIdopont() != 0) {
+            value.setKivetelIdopont(System.currentTimeMillis());
+
+            lencseMutableLiveData.postValue(value);
+            lencseViewModel.insert(value);
+            lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
+            updateLencseUI.clearLencseUi();
+        }
+
         Log.i(TAG, "kivesz: lefutott");
     }
 
@@ -74,5 +77,19 @@ public class MainAction {
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
 
         timePickerDialog.show();
+    }
+
+    public void setTisztitoViz(MutableLiveData<Lencse> lencseAdat) {
+        //ezt itt biztosan másképp kellene megoldanom, csak flippelem az értéket, függetlenül hogy kivan e pipálva vagy nincs....
+        final Lencse lencse = lencseAdat.getValue();
+        if(lencse != null) {
+            if(lencse.getTisztitoViz() == 0) lencse.setTisztitoViz(1);
+            else lencse.setTisztitoViz(0);
+
+            lencseAdat.postValue(lencse);
+            Log.i(TAG, "setTisztitoViz: lencse állítva: "+lencse.getTisztitoViz());
+        } else {
+            Log.i(TAG, "setTisztitoViz: Lencse Adat null");
+        }
     }
 }

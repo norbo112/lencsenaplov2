@@ -7,7 +7,6 @@ import androidx.room.Room;
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
-import com.norbo.project.lencsenaplov2.db.dao.LencseDao;
 import com.norbo.project.lencsenaplov2.ui.utilts.ConvertEntities;
 
 import javax.inject.Singleton;
@@ -33,6 +32,7 @@ public class FirstModule {
     @Provides
     LencseDatabase provideLencseDatabase(Context context) {
         return Room.databaseBuilder(context, LencseDatabase.class, LencseDatabase.DB_NAME)
+                .addMigrations(LencseDatabase.MIGRATION_1_2)
                 .fallbackToDestructiveMigration()
                 .build();
     }

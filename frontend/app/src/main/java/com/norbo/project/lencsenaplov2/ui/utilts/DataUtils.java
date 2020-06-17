@@ -1,5 +1,7 @@
 package com.norbo.project.lencsenaplov2.ui.utilts;
 
+import com.norbo.project.lencsenaplov2.data.model.Lencse;
+
 import java.time.Duration;
 import java.time.Instant;
 
@@ -18,5 +20,13 @@ public class DataUtils {
         Duration duration = Duration.between(Instant.ofEpochMilli(begin),
                 Instant.ofEpochMilli(end));
         return duration.toMinutes();
+    }
+
+    public static String getTisztitoViz(Lencse lencseadat) {
+        if(lencseadat.getTisztitoViz() == 1)
+            return "Tablettás vízbe berakva";
+        else {
+            return "";
+        }
     }
 }
