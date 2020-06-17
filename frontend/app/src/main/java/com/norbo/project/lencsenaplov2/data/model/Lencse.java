@@ -6,14 +6,16 @@ public class Lencse implements Serializable {
     private int id;
     private long betetelIdopont;
     private long kivetelIdopont;
+    private int tisztitoViz;
 
     public Lencse() {
     }
 
-    public Lencse(int id, long betetelIdopont, long kivetelIdopont) {
+    public Lencse(int id, long betetelIdopont, long kivetelIdopont, int tisztitoViz) {
         this.id = id;
         this.betetelIdopont = betetelIdopont;
         this.kivetelIdopont = kivetelIdopont;
+        this.tisztitoViz = tisztitoViz;
     }
 
     public long getBetetelIdopont() {
@@ -38,5 +40,13 @@ public class Lencse implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getTisztitoViz() {
+        return tisztitoViz;
+    }
+
+    public void setTisztitoViz(int tisztitoViz) {
+        this.tisztitoViz = tisztitoViz;
     }
 }

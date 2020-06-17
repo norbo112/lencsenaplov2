@@ -46,7 +46,7 @@ public class LencseViewModel extends ViewModel {
     }
 
     public CompletableFuture<Long> insert(Lencse lencse) {
-        return repository.insert(new LencseEntity(lencse.getBetetelIdopont(), lencse.getKivetelIdopont()));
+        return repository.insert(new LencseEntity(lencse.getBetetelIdopont(), lencse.getKivetelIdopont(), lencse.getTisztitoViz()));
     }
 
     public CompletableFuture<Long> insertKezdoIdopont(KezdoIdopont kezdoIdopont) {

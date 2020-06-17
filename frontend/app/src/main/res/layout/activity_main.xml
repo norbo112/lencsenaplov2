@@ -65,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#000"
-                        android:text="Vezérlő"
+                        android:text="@string/main_vezerlo_title"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:textColor="#fff"
@@ -132,7 +132,14 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:onClick="@{() -> action.betesz(lencseadat)}"
-                            android:text="Kezdés" />
+                            android:text="@string/main_vezerlo_begin_label" />
+
+                        <Switch
+                            android:id="@+id/lencse_tisztito_viz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:checked="@{lencseadat.tisztitoViz == 1}"
+                            android:onClick="@{() -> action.setTisztitoViz(lencseadat)}" />
 
                         <Button
                             android:id="@+id/btnBefejez"
@@ -142,7 +149,7 @@
                             android:layout_margin="5dp"
                             android:layout_weight="1"
                             android:onClick="@{() -> action.kivesz(lencseadat)}"
-                            android:text="Befejezés" />
+                            android:text="@string/main_vezerlo_end_label" />
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

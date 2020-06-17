@@ -24,10 +24,10 @@ public class ConvertEntities {
     }
 
     public Lencse convertFromEntityLencse(LencseEntity lencseEntity) {
-        return new Lencse(lencseEntity.getId(), lencseEntity.getBetetelIdopont(), lencseEntity.getKivetelIdopont());
+        return new Lencse(lencseEntity.getId(), lencseEntity.getBetetelIdopont(), lencseEntity.getKivetelIdopont(), lencseEntity.getTisztitoViz());
     }
 
     public LencseEntity convertFromUILencse(Lencse lencse) {
-        return new LencseEntity(lencse.getId(), lencse.getBetetelIdopont(), lencse.getKivetelIdopont());
+        return new LencseEntity(lencse.getId(), lencse.getBetetelIdopont(), lencse.getKivetelIdopont(), lencse.getTisztitoViz());
     }
 }

@@ -1,5 +1,6 @@
 package com.norbo.project.lencsenaplov2.db.entities;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -12,21 +13,24 @@ public class LencseEntity implements Serializable {
     private int id;
     private long betetelIdopont;
     private long kivetelIdopont;
+    private int tisztitoViz;
 
     public LencseEntity() {
     }
 
     @Ignore
-    public LencseEntity(long betetelIdopont, long kivetelIdopont) {
+    public LencseEntity(long betetelIdopont, long kivetelIdopont, int tisztitoViz) {
         this.betetelIdopont = betetelIdopont;
         this.kivetelIdopont = kivetelIdopont;
+        this.tisztitoViz = tisztitoViz;
     }
 
     @Ignore
-    public LencseEntity(int id, long betetelIdopont, long kivetelIdopont) {
+    public LencseEntity(int id, long betetelIdopont, long kivetelIdopont, int tisztitoViz) {
         this.id = id;
         this.betetelIdopont = betetelIdopont;
         this.kivetelIdopont = kivetelIdopont;
+        this.tisztitoViz = tisztitoViz;
     }
 
     public long getBetetelIdopont() {
@@ -51,5 +55,13 @@ public class LencseEntity implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getTisztitoViz() {
+        return tisztitoViz;
+    }
+
+    public void setTisztitoViz(int tisztitoViz) {
+        this.tisztitoViz = tisztitoViz;
     }
 }

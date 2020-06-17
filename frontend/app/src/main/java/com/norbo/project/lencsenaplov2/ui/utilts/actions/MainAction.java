@@ -3,6 +3,7 @@ package com.norbo.project.lencsenaplov2.ui.utilts.actions;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.widget.TimePicker;
 
 import androidx.lifecycle.MutableLiveData;
@@ -11,6 +12,7 @@ import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
+import com.norbo.project.lencsenaplov2.ui.utilts.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
 
 import java.util.Calendar;
@@ -26,6 +28,9 @@ public class MainAction {
     @Inject
     LencseViewModel lencseViewModel;
 
+    @Inject
+    MyToaster myToaster;
+
     public MainAction(Context context) {
         ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
         this.updateLencseUI = (UpdateLencseUI) context;
@@ -40,20 +45,20 @@ public class MainAction {
 
             lencseViewModel.insertKezdoIdopont(new KezdoIdopont(value.getBetetelIdopont()));
             Log.i(TAG, "betesz: lefutott");
-        } else  {
-            return;
         }
-
     }
 
     public void kivesz(MutableLiveData<Lencse> lencseMutableLiveData) {
         Lencse value = lencseMutableLiveData.getValue();
-        if(value != null && value.getKivetelIdopont() == 0 && value.getBetetelIdopont() != 0) value.setKivetelIdopont(System.currentTimeMillis());
-        else return;
-        lencseMutableLiveData.postValue(value);
-        lencseViewModel.insert(value);
-        lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
-        updateLencseUI.clearLencseUi();
+        if(value != null && value.getKivetelIdopont() == 0 && value.getBetetelIdopont() != 0) {
+            value.setKivetelIdopont(System.currentTimeMillis());
+
+            lencseMutableLiveData.postValue(value);
+            lencseViewModel.insert(value).whenComplete((id, throwable) -> myToaster.show("Lencseadat rögzítve: "+id));
+            lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
+            updateLencseUI.clearLencseUi();
+        }
+
         Log.i(TAG, "kivesz: lefutott");
     }
 
@@ -77,5 +82,19 @@ public class MainAction {
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
 
         timePickerDialog.show();
+    }
+
+    public void setTisztitoViz(MutableLiveData<Lencse> lencseAdat) {
+        //ezt itt biztosan másképp kellene megoldanom, csak flippelem az értéket, függetlenül hogy kivan e pipálva vagy nincs....
+        final Lencse lencse = lencseAdat.getValue();
+        if(lencse != null) {
+            if(lencse.getTisztitoViz() == 0) lencse.setTisztitoViz(1);
+            else lencse.setTisztitoViz(0);
+
+            lencseAdat.postValue(lencse);
+            Log.i(TAG, "setTisztitoViz: lencse állítva: "+lencse.getTisztitoViz());
+        } else {
+            Log.i(TAG, "setTisztitoViz: Lencse Adat null");
+        }
     }
 }

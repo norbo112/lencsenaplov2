@@ -9,8 +9,8 @@
             type="com.norbo.project.lencsenaplov2.data.model.Lencse" />
 
         <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils" />
-
         <import type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -82,5 +82,13 @@
             android:text="@{DataUtils.elapsedTime(lencseadat.betetelIdopont, lencseadat.kivetelIdopont)}"
             android:textSize="12sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@{DataUtils.getTisztitoViz(lencseadat)}"
+            android:textSize="12sp"
+            android:textColor="#FF0000"
+            android:visibility="@{lencseadat.tisztitoViz == 1 ? View.VISIBLE : View.GONE}"/>
     </LinearLayout>
 </layout>
