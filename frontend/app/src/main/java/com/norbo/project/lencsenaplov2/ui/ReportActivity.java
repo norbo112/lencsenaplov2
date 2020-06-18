@@ -1,8 +1,10 @@
 package com.norbo.project.lencsenaplov2.ui;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,6 +26,7 @@ import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -46,10 +49,44 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewModel.getLencseData().observe(this, (lencseList) -> {
-            Collections.sort(lencseList,
-                    ((o1, o2) -> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont())));
-            initChart(binding.chart, lencseList);
+            if(lencseList != null) {
+                binding.setInfo(getInfoMsg(lencseList));
+                Collections.sort(lencseList,
+                        ((o1, o2) -> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont())));
+                initChart(binding.chart, lencseList);
+            }
         });
+    }
+
+    @SuppressLint("DefaultLocale")
+    private Info getInfoMsg(List<Lencse> lencseList) {
+        Info info = new Info();
+        info.setCountMsg(lencseList.size()+" db bejegyzés mentve");
+        Lencse max = Collections.max(lencseList, getLencseComparator());
+        Lencse min = Collections.min(lencseList, getLencseComparator());
+        float elteltIdoMax = DataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
+        float elteltIdoMin = DataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
+
+        String format = "%s: %s \n%.2f óra és %.2f perc";
+
+        info.setMaxMsg(String.format(format,
+                "Legtöbbet viselt nap",
+                FormatUtils.getDayShortFormat(max.getBetetelIdopont()),
+                (elteltIdoMax/60), (elteltIdoMax % 60), " perc."));
+
+        info.setMinMsg(String.format(format,
+                "Legkevesebb nap",
+                FormatUtils.getDayShortFormat(min.getBetetelIdopont()),
+                (elteltIdoMin/60), (elteltIdoMin % 60), " perc."));
+        return info;
+    }
+
+    private Comparator<Lencse> getLencseComparator() {
+        return (o1, o2) -> {
+            long o1_elt = o1.getKivetelIdopont() - o1.getBetetelIdopont();
+            long o2_elt = o2.getKivetelIdopont() - o2.getBetetelIdopont();
+            return Long.compare(o1_elt, o2_elt);
+        };
     }
 
     private void initChart(LineChart chart, List<Lencse> list) {
@@ -74,7 +111,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         xAxis.setTextColor(Color.WHITE);
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
-            public String getAxisLabel(float value, AxisBase axis) { ;
+            public String getAxisLabel(float value, AxisBase axis) {
                 return FormatUtils.getDayShortFormat(list.get((int)value).getBetetelIdopont());
             }
         });
@@ -131,5 +168,35 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     @Override
     public void onNothingSelected() {
 
+    }
+
+    public class Info {
+        private String countMsg;
+        private String minMsg;
+        private String maxMsg;
+
+        public String getCountMsg() {
+            return countMsg;
+        }
+
+        public void setCountMsg(String countMsg) {
+            this.countMsg = countMsg;
+        }
+
+        public String getMinMsg() {
+            return minMsg;
+        }
+
+        public void setMinMsg(String minMsg) {
+            this.minMsg = minMsg;
+        }
+
+        public String getMaxMsg() {
+            return maxMsg;
+        }
+
+        public void setMaxMsg(String maxMsg) {
+            this.maxMsg = maxMsg;
+        }
     }
 }

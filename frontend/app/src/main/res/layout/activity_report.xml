@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="info"
+            type="com.norbo.project.lencsenaplov2.ui.ReportActivity.Info" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -28,6 +30,66 @@
         android:background="@mipmap/hatter1">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_info"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="15dp"
+            app:cardBackgroundColor="#8301579B"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/vezerlo_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#000"
+                    android:text="@string/report_info_title"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="#fff"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#8301579B"
+                    android:padding="5dp"
+                    android:text="@{info.countMsg}"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#8301579B"
+                    android:padding="5dp"
+                    android:text="@{info.minMsg}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#8301579B"
+                    android:padding="5dp"
+                    android:text="@{info.maxMsg}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_view_rec"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -38,7 +100,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/card_view_info">
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
