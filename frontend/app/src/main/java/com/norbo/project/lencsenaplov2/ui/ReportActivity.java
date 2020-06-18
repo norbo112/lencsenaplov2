@@ -70,12 +70,12 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         String format = "%s: %s %.2f óra és %.2f perc";
 
         info.setMaxMsg(String.format(format,
-                "Legtöbbet viselt nap: ",
+                "Legtöbbet viselt nap",
                 FormatUtils.getDayShortFormat(max.getBetetelIdopont()),
                 (elteltIdoMax/60), (elteltIdoMax % 60), " perc."));
 
         info.setMinMsg(String.format(format,
-                "Legkevesebb nap: ",
+                "Legkevesebb nap",
                 FormatUtils.getDayShortFormat(min.getBetetelIdopont()),
                 (elteltIdoMin/60), (elteltIdoMin % 60), " perc."));
         return info;
@@ -111,7 +111,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         xAxis.setTextColor(Color.WHITE);
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
-            public String getAxisLabel(float value, AxisBase axis) { ;
+            public String getAxisLabel(float value, AxisBase axis) {
                 return FormatUtils.getDayShortFormat(list.get((int)value).getBetetelIdopont());
             }
         });
