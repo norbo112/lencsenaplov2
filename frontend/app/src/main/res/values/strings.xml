@@ -4,6 +4,7 @@
     <string name="lencse_list_be_label"><![CDATA[Be ->]]></string>
     <string name="lencse_list_ki_label"><![CDATA[Ki ->]]></string>
     <string name="main_vezerlo_title">Vezérlő</string>
+    <string name="report_info_title">Információ</string>
     <string name="main_vezerlo_begin_label">Kezdés</string>
     <string name="main_vezerlo_end_label">Befejezés</string>
 </resources>
