@@ -67,7 +67,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         float elteltIdoMax = DataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
         float elteltIdoMin = DataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
 
-        String format = "%s: %s %.2f óra és %.2f perc";
+        String format = "%s: %s \n%.2f óra és %.2f perc";
 
         info.setMaxMsg(String.format(format,
                 "Legtöbbet viselt nap",
