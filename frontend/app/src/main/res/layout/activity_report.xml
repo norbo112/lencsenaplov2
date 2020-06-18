@@ -58,31 +58,34 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#C3FFFFFF"
+                    android:background="#8301579B"
                     android:padding="5dp"
                     android:text="@{info.countMsg}"
                     android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#FFFFFF" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#C3FFFFFF"
+                    android:background="#8301579B"
                     android:padding="5dp"
                     android:text="@{info.minMsg}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#C3FFFFFF"
+                    android:background="#8301579B"
                     android:padding="5dp"
                     android:text="@{info.maxMsg}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

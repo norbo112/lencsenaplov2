@@ -73,7 +73,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
                 "Legtöbbet viselt nap: ",
                 FormatUtils.getDayShortFormat(max.getBetetelIdopont()),
                 (elteltIdoMax/60), (elteltIdoMax % 60), " perc."));
-        
+
         info.setMinMsg(String.format(format,
                 "Legkevesebb nap: ",
                 FormatUtils.getDayShortFormat(min.getBetetelIdopont()),
