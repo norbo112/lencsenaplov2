@@ -37,6 +37,13 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
     }
 
     @Override
+    public void insertAll(List<LencseEntity> lencseList) {
+        LencseDatabase.executor.execute(() -> {
+            lencseDatabase.lencseDao().insertAll(lencseList);
+        });
+    }
+
+    @Override
     public LiveData<List<LencseEntity>> selectAll() {
         return lencseDatabase.lencseDao().selectAll();
     }

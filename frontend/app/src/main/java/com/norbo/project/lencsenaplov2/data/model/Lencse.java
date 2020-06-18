@@ -11,6 +11,12 @@ public class Lencse implements Serializable {
     public Lencse() {
     }
 
+    public Lencse(long betetelIdopont, long kivetelIdopont, int tisztitoViz) {
+        this.betetelIdopont = betetelIdopont;
+        this.kivetelIdopont = kivetelIdopont;
+        this.tisztitoViz = tisztitoViz;
+    }
+
     public Lencse(int id, long betetelIdopont, long kivetelIdopont, int tisztitoViz) {
         this.id = id;
         this.betetelIdopont = betetelIdopont;
