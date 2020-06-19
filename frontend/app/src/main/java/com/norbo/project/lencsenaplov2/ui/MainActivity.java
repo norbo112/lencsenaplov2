@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
+import com.norbo.project.lencsenaplov2.ui.utilts.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
 import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
@@ -28,6 +30,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements UpdateLencseUI {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int FILE_CHOOSER_CODE = 100;
 
     private MutableLiveData<Lencse> lencseMutableLiveData;
     private MutableLiveData<Long> currentTime;
@@ -38,6 +41,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
 
     @Inject
     LencseAdapterFactory lencseAdapterFactory;
+
+    @Inject
+    LencseAdatToltoController adatTolto;
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -119,7 +125,25 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.menu_diagram) {
             startActivity(new Intent(this, ReportActivity.class));
+        } else if(item.getItemId() == R.id.menu_add_list) {
+            loadLencseAdat();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == FILE_CHOOSER_CODE && resultCode == RESULT_OK) {
+            adatTolto.loadLencseAdat(data.getData());
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void loadLencseAdat() {
+        Intent fileChooser = new Intent(Intent.ACTION_GET_CONTENT);
+        fileChooser.setType("*/*");
+        fileChooser.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"text/plain"});
+        fileChooser.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(fileChooser, FILE_CHOOSER_CODE);
     }
 }

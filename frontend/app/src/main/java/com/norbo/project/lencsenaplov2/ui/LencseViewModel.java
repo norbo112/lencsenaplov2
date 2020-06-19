@@ -11,6 +11,7 @@ import com.norbo.project.lencsenaplov2.db.entities.KezdoIdopontEntity;
 import com.norbo.project.lencsenaplov2.db.entities.LencseEntity;
 import com.norbo.project.lencsenaplov2.ui.utilts.ConvertEntities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -47,6 +48,14 @@ public class LencseViewModel extends ViewModel {
 
     public CompletableFuture<Long> insert(Lencse lencse) {
         return repository.insert(new LencseEntity(lencse.getBetetelIdopont(), lencse.getKivetelIdopont(), lencse.getTisztitoViz()));
+    }
+
+    public void insertAll(List<Lencse> lencseList) {
+        List<LencseEntity> lencseEntities =
+                lencseList.stream()
+                        .map((lencse -> converter.convertFromUILencse(lencse)))
+                        .collect(Collectors.toList());
+        repository.insertAll(lencseEntities);
     }
 
     public CompletableFuture<Long> insertKezdoIdopont(KezdoIdopont kezdoIdopont) {

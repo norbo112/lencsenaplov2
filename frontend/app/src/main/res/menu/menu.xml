@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_baseline_bar_chart_24"
         android:title="@string/diagram_menu_label"
         app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/menu_add_list"
+        android:icon="@drawable/ic_baseline_add_box_24"
+        android:title="@string/menu_add_list_label"
+        app:showAsAction="ifRoom|withText" />
 </menu>
