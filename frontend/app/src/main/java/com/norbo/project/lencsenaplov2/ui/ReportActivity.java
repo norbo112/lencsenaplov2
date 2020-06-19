@@ -23,6 +23,7 @@ import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
+import com.norbo.project.lencsenaplov2.ui.utilts.actions.ReportAction;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,6 +52,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         viewModel.getLencseData().observe(this, (lencseList) -> {
             if(lencseList != null) {
                 binding.setInfo(getInfoMsg(lencseList));
+                binding.setAction(new ReportAction(this, lencseList));
                 Collections.sort(lencseList,
                         ((o1, o2) -> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont())));
                 initChart(binding.chart, lencseList);
@@ -123,14 +125,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     }
 
     private void setCharData(LineChart lineChart, List<Lencse> lencseList) {
-        ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < lencseList.size(); i++) {
-            entries.add(new Entry(i,
-                    DataUtils.elapsedTimeFloat(
-                            lencseList.get(i).getBetetelIdopont(),
-                            lencseList.get(i).getKivetelIdopont()),
-                    lencseList.get(i)));
-        }
+        ArrayList<Entry> entries = getEntries(lencseList);
 
         LineDataSet set;
         if (lineChart.getData() != null &&
@@ -156,6 +151,18 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
         LineData data = new LineData(set);
         lineChart.setData(data);
+    }
+
+    private ArrayList<Entry> getEntries(List<Lencse> lencseList) {
+        ArrayList<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < lencseList.size(); i++) {
+            entries.add(new Entry(i,
+                    DataUtils.elapsedTimeFloat(
+                            lencseList.get(i).getBetetelIdopont(),
+                            lencseList.get(i).getKivetelIdopont()),
+                    lencseList.get(i)));
+        }
+        return entries;
     }
 
     @Override

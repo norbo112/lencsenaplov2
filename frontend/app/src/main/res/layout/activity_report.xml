@@ -7,6 +7,9 @@
         <variable
             name="info"
             type="com.norbo.project.lencsenaplov2.ui.ReportActivity.Info" />
+        <variable
+            name="action"
+            type="com.norbo.project.lencsenaplov2.ui.utilts.actions.ReportAction" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -86,6 +89,79 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <TextView
+                        android:id="@+id/vezerlo_szuro_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#000"
+                        android:paddingLeft="10dp"
+                        android:text="@string/report_szuro_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#fff"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#000000"
+                        android:contentDescription="@string/imageview_report_desc"
+                        app:srcCompat="@drawable/ic_baseline_sort_24"
+                        tools:srcCompat="@drawable/ic_baseline_sort_24" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#000000"
+                        android:contentDescription="@string/imageview_report_desc"
+                        android:onClick="@{() -> action.showStartDateSetter()}"
+                        app:srcCompat="@drawable/ic_baseline_date_range_24"
+                        tools:srcCompat="@drawable/ic_baseline_date_range_24" />
+
+                    <TextView
+                        android:id="@+id/vezerlo_szuro_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#000"
+                        android:text="@{action.startDate}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#fff" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#000000"
+                        android:contentDescription="@string/imageview_report_desc"
+                        android:onClick="@{() -> action.showEndtDateSetter()}"
+                        app:srcCompat="@drawable/ic_baseline_date_range_24"
+                        tools:srcCompat="@drawable/ic_baseline_date_range_24" />
+
+                    <TextView
+                        android:id="@+id/vezerlo_szuro_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#000"
+                        android:text="@{action.endDate}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="#fff" />
+                </LinearLayout>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
