@@ -6,7 +6,9 @@ import androidx.room.Room;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
+import com.norbo.project.lencsenaplov2.ui.utilts.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
+import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 import com.norbo.project.lencsenaplov2.ui.utilts.ConvertEntities;
 import com.norbo.project.lencsenaplov2.ui.utilts.MyToaster;
 
@@ -36,6 +38,12 @@ public class FirstModule {
                 .addMigrations(LencseDatabase.MIGRATION_1_2)
                 .fallbackToDestructiveMigration()
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    LencseAdatToltoController provideAdatTolto(Context context, LencseViewModel viewModel, MyToaster toaster) {
+        return new LencseAdatToltoController(context, viewModel, toaster);
     }
 
     @Singleton
