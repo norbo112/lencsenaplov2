@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -181,11 +182,15 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     public void updateLineChart(List<Lencse> lencseList) {
+        if(binding.chart.getXAxis().getValueFormatter() != null)
+            ((MyFormatter)binding.chart.getXAxis().getValueFormatter()).setLencseList(lencseList);
+        else
+            binding.chart.getXAxis().setValueFormatter(new MyFormatter(lencseList));
         binding.chart.clear();
         binding.chart.setData(new LineData(getLineDataSet(binding.chart, getEntries(lencseList))));
+        binding.chart.fitScreen();
         binding.chart.notifyDataSetChanged();
         binding.chart.invalidate();
-        binding.chart.fitScreen();
     }
 
     public class Info {
@@ -227,7 +232,18 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
         @Override
         public String getAxisLabel(float value, AxisBase axis) {
-            return FormatUtils.getDayShortFormat(lencseList.get((int)value).getBetetelIdopont());
+            String res = "";
+            try {
+                res = FormatUtils.getDayShortFormat(lencseList.get((int) value).getBetetelIdopont());
+            } catch (IndexOutOfBoundsException ex) {
+                res = "";
+                Log.e(TAG, "getAxisLabel: faszomvan itt...", ex);
+            }
+            return res;
+        }
+
+        public void setLencseList(List<Lencse> lencseList) {
+            this.lencseList = lencseList;
         }
     }
 }
