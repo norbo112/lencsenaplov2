@@ -123,22 +123,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         ArrayList<Entry> entries = getEntries(lencseList);
 
         LineDataSet set;
-        if (lineChart.getData() != null &&
-                lineChart.getData().getDataSetCount() > 0) {
-            set = getLineDataSet(lineChart, entries);
-        } else {
-            set = new LineDataSet(entries, "Eltelt idő");
-            set.setDrawIcons(false);
-            set.enableDashedLine(10f, 5f, 0f);
-            set.setColor(Color.WHITE);
-            set.setCircleColor(Color.GREEN);
-            set.setLineWidth(1f);
-            set.setCircleRadius(3f);
-            set.setCircleHoleRadius(3f);
-            set.setFormLineWidth(1f);
-            set.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-            set.setFormSize(15.f);
-        }
+
+        set = getLineDataSet(lineChart, entries);
 
         LineData data = new LineData(set);
         lineChart.setData(data);
