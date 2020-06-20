@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -14,6 +13,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -23,15 +23,18 @@ import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
+import com.norbo.project.lencsenaplov2.ui.utilts.actions.ReportAction;
+import com.norbo.project.lencsenaplov2.ui.utilts.report.ReportUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-public class ReportActivity extends BaseActivity<ActivityReportBinding> implements OnChartValueSelectedListener {
+public class ReportActivity extends BaseActivity<ActivityReportBinding> implements OnChartValueSelectedListener, ReportUI {
     private static final String TAG = "ReportActivity";
     public ReportActivity() {
         super(R.layout.activity_report);
@@ -51,6 +54,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         viewModel.getLencseData().observe(this, (lencseList) -> {
             if(lencseList != null) {
                 binding.setInfo(getInfoMsg(lencseList));
+                binding.setAction(new ReportAction(this, lencseList));
                 Collections.sort(lencseList,
                         ((o1, o2) -> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont())));
                 initChart(binding.chart, lencseList);
@@ -109,29 +113,32 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
         xAxis.setEnabled(true);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return FormatUtils.getDayShortFormat(list.get((int)value).getBetetelIdopont());
-            }
-        });
+        xAxis.setValueFormatter(getMyFormatter(list));
 
-        setCharData(chart, list);
+        setChartData(chart, list);
         chart.animateX(1500);
 
         chart.getLegend().setEnabled(false);
     }
 
-    private void setCharData(LineChart lineChart, List<Lencse> lencseList) {
-        ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < lencseList.size(); i++) {
-            entries.add(new Entry(i,
-                    DataUtils.elapsedTimeFloat(
-                            lencseList.get(i).getBetetelIdopont(),
-                            lencseList.get(i).getKivetelIdopont()),
-                    lencseList.get(i)));
-        }
+    private IndexAxisValueFormatter getMyFormatter(List<Lencse> list) {
+        return new IndexAxisValueFormatter(
+                list.stream().map((lencse) -> FormatUtils.getDayShortFormat(lencse.getBetetelIdopont())).collect(Collectors.toList())
+        );
+    }
 
+    private void setChartData(LineChart lineChart, List<Lencse> lencseList) {
+        ArrayList<Entry> entries = getEntries(lencseList);
+
+        LineDataSet set;
+
+        set = getLineDataSet(lineChart, entries);
+
+        LineData data = new LineData(set);
+        lineChart.setData(data);
+    }
+
+    private LineDataSet getLineDataSet(LineChart lineChart, ArrayList<Entry> entries) {
         LineDataSet set;
         if (lineChart.getData() != null &&
                 lineChart.getData().getDataSetCount() > 0) {
@@ -153,9 +160,19 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
             set.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             set.setFormSize(15.f);
         }
+        return set;
+    }
 
-        LineData data = new LineData(set);
-        lineChart.setData(data);
+    private ArrayList<Entry> getEntries(List<Lencse> lencseList) {
+        ArrayList<Entry> entries = new ArrayList<>(lencseList.size());
+        for (int i = 0; i < lencseList.size(); i++) {
+            entries.add(new Entry(i,
+                    DataUtils.elapsedTimeFloat(
+                            lencseList.get(i).getBetetelIdopont(),
+                            lencseList.get(i).getKivetelIdopont()),
+                    lencseList.get(i)));
+        }
+        return entries;
     }
 
     @Override
@@ -168,6 +185,16 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     @Override
     public void onNothingSelected() {
 
+    }
+
+    @Override
+    public void updateLineChart(List<Lencse> lencseList) {
+        binding.chart.clear();
+        binding.chart.getXAxis().setValueFormatter(getMyFormatter(lencseList));
+        binding.chart.setData(new LineData(getLineDataSet(binding.chart, getEntries(lencseList))));
+        binding.chart.fitScreen();
+        binding.chart.notifyDataSetChanged();
+        binding.chart.invalidate();
     }
 
     public class Info {
