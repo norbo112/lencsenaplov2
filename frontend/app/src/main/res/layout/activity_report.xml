@@ -149,7 +149,6 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="@{FormatUtils.getDateShortFormat(action.startDate)}"
-                        android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="#fff"
                         android:textSize="12sp" />
@@ -177,7 +176,6 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="@{FormatUtils.getDateShortFormat(action.endDate)}"
-                        android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="#fff"
                         android:textSize="12sp" />
