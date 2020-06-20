@@ -14,6 +14,9 @@ public class FormatUtils {
     private static final SimpleDateFormat dayshortFORMAT = new SimpleDateFormat("MM.dd.");
     @SuppressLint("SimpleDateFormat")
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    @SuppressLint("SimpleDateFormat")
+    private static final SimpleDateFormat dateFormatShot = new SimpleDateFormat("MM.dd. EEE.");
+
 
 
     public static String getDateString(long timestamp) {
@@ -21,6 +24,13 @@ public class FormatUtils {
             return "Nincs időpont rögzítve";
         }
         return format.format(new Date(timestamp));
+    }
+
+    public static String getDateShortFormat(long timestamp) {
+        if(timestamp == 0) {
+            return "Nincs időpont rögzítve";
+        }
+        return dateFormatShot.format(new Date(timestamp));
     }
 
     public static String getTimeString(long timestamp) {

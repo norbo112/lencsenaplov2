@@ -6,6 +6,7 @@ import com.norbo.project.lencsenaplov2.ui.utilts.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.ui.MainActivity;
 import com.norbo.project.lencsenaplov2.ui.ReportActivity;
 import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
+import com.norbo.project.lencsenaplov2.ui.utilts.actions.ReportAction;
 
 import javax.inject.Singleton;
 
@@ -23,4 +24,6 @@ public interface ApplicationGraph {
     void inject(ReportActivity reportActivity);
 
     void inject(LencseAdatToltoController adatTolto);
+
+    void inject(ReportAction reportAction);
 }

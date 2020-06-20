@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,6 +23,7 @@ import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.actions.ReportAction;
+import com.norbo.project.lencsenaplov2.ui.utilts.report.ReportUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ReportActivity extends BaseActivity<ActivityReportBinding> implements OnChartValueSelectedListener {
+public class ReportActivity extends BaseActivity<ActivityReportBinding> implements OnChartValueSelectedListener, ReportUI {
     private static final String TAG = "ReportActivity";
     public ReportActivity() {
         super(R.layout.activity_report);
@@ -118,23 +118,19 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
             }
         });
 
-        setCharData(chart, list);
+        setChartData(chart, list);
         chart.animateX(1500);
 
         chart.getLegend().setEnabled(false);
     }
 
-    private void setCharData(LineChart lineChart, List<Lencse> lencseList) {
+    private void setChartData(LineChart lineChart, List<Lencse> lencseList) {
         ArrayList<Entry> entries = getEntries(lencseList);
 
         LineDataSet set;
         if (lineChart.getData() != null &&
                 lineChart.getData().getDataSetCount() > 0) {
-            set = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
-            set.setValues(entries);
-            set.notifyDataSetChanged();
-            lineChart.getData().notifyDataChanged();
-            lineChart.notifyDataSetChanged();
+            set = getLineDataSet(lineChart, entries);
         } else {
             set = new LineDataSet(entries, "Eltelt idő");
             set.setDrawIcons(false);
@@ -151,6 +147,16 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
         LineData data = new LineData(set);
         lineChart.setData(data);
+    }
+
+    private LineDataSet getLineDataSet(LineChart lineChart, ArrayList<Entry> entries) {
+        LineDataSet set;
+        set = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
+        set.setValues(entries);
+        set.notifyDataSetChanged();
+        lineChart.getData().notifyDataChanged();
+        lineChart.notifyDataSetChanged();
+        return set;
     }
 
     private ArrayList<Entry> getEntries(List<Lencse> lencseList) {
@@ -175,6 +181,11 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     @Override
     public void onNothingSelected() {
 
+    }
+
+    @Override
+    public void updateLineChart(List<Lencse> lencseList) {
+        initChart(binding.chart, lencseList);
     }
 
     public class Info {
