@@ -124,61 +124,29 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:weightSum="4"
-                    app:layout_constraintTop_toBottomOf="@+id/chart">
+                    android:background="#000">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#000000"
-                        android:contentDescription="@string/imageview_report_desc"
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:onClick="@{() -> action.showStartDateSetter()}"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        app:srcCompat="@drawable/ic_baseline_date_range_24"
-                        tools:srcCompat="@drawable/ic_baseline_date_range_24" />
-
-                    <TextView
-                        android:id="@+id/vezerlo_szuro_start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#000"
-                        android:gravity="center_vertical"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
                         android:text="@{FormatUtils.getDateShortFormat(action.startDate)}"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        app:icon="@drawable/ic_baseline_date_range_24"
+                        app:iconTint="#4CAF50"
+                        android:backgroundTint="@color/card_item_bg_label"
                         android:layout_weight="1"
-                        android:background="#000000"
-                        android:contentDescription="@string/imageview_report_desc"
+                        android:layout_margin="5dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:onClick="@{() -> action.showEndtDateSetter()}"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        app:srcCompat="@drawable/ic_baseline_date_range_24"
-                        tools:srcCompat="@drawable/ic_baseline_date_range_24" />
-
-                    <TextView
-                        android:id="@+id/vezerlo_szuro_end"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:background="#000"
-                        android:gravity="center_vertical"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
                         android:text="@{FormatUtils.getDateShortFormat(action.endDate)}"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
+                        app:icon="@drawable/ic_baseline_date_range_24"
+                        app:iconTint="#4CAF50"
+                        android:backgroundTint="@color/card_item_bg_label"
+                        android:layout_weight="1"
+                        android:layout_margin="5dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -189,8 +157,7 @@
                     android:orientation="horizontal"
                     android:paddingTop="10dp"
                     android:weightSum="2"
-                    android:layout_weight="1"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                    android:layout_weight="1">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
