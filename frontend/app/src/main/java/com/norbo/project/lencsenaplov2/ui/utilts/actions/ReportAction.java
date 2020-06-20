@@ -2,6 +2,7 @@ package com.norbo.project.lencsenaplov2.ui.utilts.actions;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.text.PrecomputedText;
 import android.util.Log;
 
 import androidx.databinding.BaseObservable;
@@ -84,6 +85,7 @@ public class ReportAction extends BaseObservable {
     }
 
     public void clearFilter() {
+        if(startDate == 0 || endDate == 0) return;
         setStartDate(0);
         setEndDate(0);
         reportUI.updateLineChart(origLencseList);

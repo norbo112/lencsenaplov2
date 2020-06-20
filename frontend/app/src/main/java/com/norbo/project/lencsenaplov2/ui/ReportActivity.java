@@ -111,12 +111,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
         xAxis.setEnabled(true);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return FormatUtils.getDayShortFormat(list.get((int)value).getBetetelIdopont());
-            }
-        });
+        xAxis.setValueFormatter(new MyFormatter(list));
 
         setChartData(chart, list);
         chart.animateX(1500);
@@ -151,11 +146,26 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     private LineDataSet getLineDataSet(LineChart lineChart, ArrayList<Entry> entries) {
         LineDataSet set;
-        set = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
-        set.setValues(entries);
-        set.notifyDataSetChanged();
-        lineChart.getData().notifyDataChanged();
-        lineChart.notifyDataSetChanged();
+        if (lineChart.getData() != null &&
+                lineChart.getData().getDataSetCount() > 0) {
+            set = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
+            set.setValues(entries);
+            set.notifyDataSetChanged();
+            lineChart.getData().notifyDataChanged();
+            lineChart.notifyDataSetChanged();
+        } else {
+            set = new LineDataSet(entries, "Eltelt idő");
+            set.setDrawIcons(false);
+            set.enableDashedLine(10f, 5f, 0f);
+            set.setColor(Color.WHITE);
+            set.setCircleColor(Color.GREEN);
+            set.setLineWidth(1f);
+            set.setCircleRadius(3f);
+            set.setCircleHoleRadius(3f);
+            set.setFormLineWidth(1f);
+            set.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+            set.setFormSize(15.f);
+        }
         return set;
     }
 
@@ -185,7 +195,11 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     public void updateLineChart(List<Lencse> lencseList) {
-        initChart(binding.chart, lencseList);
+        binding.chart.clear();
+        binding.chart.setData(new LineData(getLineDataSet(binding.chart, getEntries(lencseList))));
+        binding.chart.notifyDataSetChanged();
+        binding.chart.invalidate();
+        binding.chart.fitScreen();
     }
 
     public class Info {
@@ -215,6 +229,19 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
         public void setMaxMsg(String maxMsg) {
             this.maxMsg = maxMsg;
+        }
+    }
+
+    private class MyFormatter extends ValueFormatter {
+        private List<Lencse> lencseList;
+
+        public MyFormatter(List<Lencse> lencseList) {
+            this.lencseList = lencseList;
+        }
+
+        @Override
+        public String getAxisLabel(float value, AxisBase axis) {
+            return FormatUtils.getDayShortFormat(lencseList.get((int)value).getBetetelIdopont());
         }
     }
 }
