@@ -14,6 +14,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -112,12 +115,18 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
         xAxis.setEnabled(true);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setValueFormatter(new MyFormatter(list));
+        xAxis.setValueFormatter(getMyFormatter(list));
 
         setChartData(chart, list);
         chart.animateX(1500);
 
         chart.getLegend().setEnabled(false);
+    }
+
+    private IndexAxisValueFormatter getMyFormatter(List<Lencse> list) {
+        return new IndexAxisValueFormatter(
+                list.stream().map((lencse) -> FormatUtils.getDayShortFormat(lencse.getBetetelIdopont())).collect(Collectors.toList())
+        );
     }
 
     private void setChartData(LineChart lineChart, List<Lencse> lencseList) {
@@ -157,7 +166,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     }
 
     private ArrayList<Entry> getEntries(List<Lencse> lencseList) {
-        ArrayList<Entry> entries = new ArrayList<>();
+        ArrayList<Entry> entries = new ArrayList<>(lencseList.size());
         for (int i = 0; i < lencseList.size(); i++) {
             entries.add(new Entry(i,
                     DataUtils.elapsedTimeFloat(
@@ -182,11 +191,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     public void updateLineChart(List<Lencse> lencseList) {
-        if(binding.chart.getXAxis().getValueFormatter() != null)
-            ((MyFormatter)binding.chart.getXAxis().getValueFormatter()).setLencseList(lencseList);
-        else
-            binding.chart.getXAxis().setValueFormatter(new MyFormatter(lencseList));
         binding.chart.clear();
+        binding.chart.getXAxis().setValueFormatter(getMyFormatter(lencseList));
         binding.chart.setData(new LineData(getLineDataSet(binding.chart, getEntries(lencseList))));
         binding.chart.fitScreen();
         binding.chart.notifyDataSetChanged();
@@ -220,30 +226,6 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
         public void setMaxMsg(String maxMsg) {
             this.maxMsg = maxMsg;
-        }
-    }
-
-    private class MyFormatter extends ValueFormatter {
-        private List<Lencse> lencseList;
-
-        public MyFormatter(List<Lencse> lencseList) {
-            this.lencseList = lencseList;
-        }
-
-        @Override
-        public String getAxisLabel(float value, AxisBase axis) {
-            String res = "";
-            try {
-                res = FormatUtils.getDayShortFormat(lencseList.get((int) value).getBetetelIdopont());
-            } catch (IndexOutOfBoundsException ex) {
-                res = "";
-                Log.e(TAG, "getAxisLabel: faszomvan itt...", ex);
-            }
-            return res;
-        }
-
-        public void setLencseList(List<Lencse> lencseList) {
-            this.lencseList = lencseList;
         }
     }
 }
