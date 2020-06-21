@@ -12,15 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.LencseListItemBinding;
+import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
+import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 
 import java.util.List;
 
-public class LencseAdapter extends RecyclerView.Adapter<LencseAdapter.ViewHolder> {
+import javax.inject.Inject;
 
+public class LencseAdapter extends RecyclerView.Adapter<LencseAdapter.ViewHolder> {
+    @Inject
+    DataUtils dataUtils;
     private List<Lencse> lencseList;
     private Context context;
 
     public LencseAdapter(List<Lencse> lencseList, Context context) {
+        ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
         this.lencseList = lencseList;
         this.context = context;
     }
@@ -52,6 +58,7 @@ public class LencseAdapter extends RecyclerView.Adapter<LencseAdapter.ViewHolder
 
         void bind(Lencse currentLencse) {
             binding.setLencseadat(currentLencse);
+            binding.setDataUtils(dataUtils);
             binding.executePendingBindings();
         }
     }

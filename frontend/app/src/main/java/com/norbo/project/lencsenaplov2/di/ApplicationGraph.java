@@ -2,6 +2,7 @@ package com.norbo.project.lencsenaplov2.di;
 
 import android.content.Context;
 
+import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapter;
 import com.norbo.project.lencsenaplov2.ui.utilts.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.ui.MainActivity;
 import com.norbo.project.lencsenaplov2.ui.ReportActivity;
@@ -26,4 +27,6 @@ public interface ApplicationGraph {
     void inject(LencseAdatToltoController adatTolto);
 
     void inject(ReportAction reportAction);
+
+    void inject(LencseAdapter lencseAdapter);
 }
