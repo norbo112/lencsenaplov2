@@ -21,6 +21,9 @@ public interface LencseDao {
     @Query("SELECT * FROM lencse_table")
     LiveData<List<LencseEntity>> selectAll();
 
+    @Query("SeLECT * FROM lencse_table")
+    List<LencseEntity> selectEntities();
+
     @Query("SELECT count(*) FROM lencse_table")
     int countRows();
 }

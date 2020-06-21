@@ -1,13 +1,9 @@
-package com.norbo.project.lencsenaplov2;
-
-import android.content.Context;
+package com.norbo.project.lencsenaplov2.db;
 
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.norbo.project.lencsenaplov2.data.model.Lencse;
-import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 import com.norbo.project.lencsenaplov2.db.dao.LencseDao;
 import com.norbo.project.lencsenaplov2.db.entities.LencseEntity;
 
@@ -19,17 +15,10 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class RoomDatabaseTest {
     private LencseDatabase lencseDatabase;
     private LencseDao lencseDao;
 
@@ -44,13 +33,6 @@ public class ExampleInstrumentedTest {
     @After
     public void dbClose() {
         lencseDatabase.close();
-    }
-
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.norbo.project.lencsenaplov2", appContext.getPackageName());
     }
 
     @Test

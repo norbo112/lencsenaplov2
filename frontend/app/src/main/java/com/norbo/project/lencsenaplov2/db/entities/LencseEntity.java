@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity(tableName = "lencse_table")
 public class LencseEntity implements Serializable {
@@ -63,5 +64,21 @@ public class LencseEntity implements Serializable {
 
     public void setTisztitoViz(int tisztitoViz) {
         this.tisztitoViz = tisztitoViz;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LencseEntity that = (LencseEntity) o;
+        return id == that.id &&
+                betetelIdopont == that.betetelIdopont &&
+                kivetelIdopont == that.kivetelIdopont &&
+                tisztitoViz == that.tisztitoViz;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, betetelIdopont, kivetelIdopont, tisztitoViz);
     }
 }
