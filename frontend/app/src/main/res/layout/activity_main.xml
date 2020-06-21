@@ -17,11 +17,13 @@
             name="action"
             type="com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction" />
 
+        <variable
+            name="dataUtils"
+            type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils" />
+
         <import type="com.norbo.project.lencsenaplov2.data.model.Lencse" />
 
         <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils" />
-
-        <import type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -109,7 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:text="@{DataUtils.elapsedTime(lencseadat.betetelIdopont, elapsedtime)}"
+                            android:text="@{dataUtils.elapsedTime(lencseadat.betetelIdopont, elapsedtime)}"
                             android:textAlignment="center"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="#FFFFFF" />

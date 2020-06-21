@@ -18,6 +18,7 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
+import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
@@ -45,6 +46,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     @Inject
     LencseAdatToltoController adatTolto;
 
+    @Inject
+    DataUtils dataUtils;
+
     public MainActivity() {
         super(R.layout.activity_main);
     }
@@ -69,6 +73,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
         }
 
         binding.setLifecycleOwner(this);
+        binding.setDataUtils(dataUtils);
         binding.setLencseadat(lencseMutableLiveData);
         binding.setAction(new MainAction(this));
         binding.setElapsedtime(currentTime);
