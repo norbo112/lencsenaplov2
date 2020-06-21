@@ -21,33 +21,36 @@ public class FormatUtils {
 
     public static String getDateString(long timestamp) {
         if(timestamp == 0) {
-            return "Nincs időpont rögzítve";
+            return "N/A";
         }
         return format.format(new Date(timestamp));
     }
 
     public static String getDateShortFormat(long timestamp) {
         if(timestamp == 0) {
-            return "Nincs időpont rögzítve";
+            return "N/A";
         }
         return dateFormatShot.format(new Date(timestamp));
     }
 
     public static String getTimeString(long timestamp) {
         if(timestamp == 0) {
-            return "Nincs időpont rögzítve";
+            return "N/A";
         }
         return timeFormat.format(new Date(timestamp));
     }
 
     public static String getDayString(long timestamp) {
         if(timestamp == 0) {
-            return "Nincs időpont rögzítve";
+            return "N/A";
         }
         return dateFormat.format(new Date(timestamp));
     }
 
     public static String getDayShortFormat(long timestamp) {
+        if(timestamp == 0) {
+            return "N/A";
+        }
         return dayshortFORMAT.format(new Date(timestamp));
     }
 }

@@ -8,7 +8,7 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="MyTheme" parent="Theme.MaterialComponents.Bridge">
+    <style name="MyTheme" parent="Theme.MaterialComponents.Light">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
