@@ -3,9 +3,11 @@ package com.norbo.project.lencsenaplov2.di;
 import android.content.Context;
 
 import androidx.room.Room;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
+import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utilts.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
@@ -56,6 +58,12 @@ public class FirstModule {
     @Provides
     MyToaster provideMyToaster(Context context) {
         return new MyToaster(context);
+    }
+
+    @Singleton
+    @Provides
+    DataUtils provideDataUtils() {
+        return new DataUtils();
     }
 
     @Singleton

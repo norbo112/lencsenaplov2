@@ -45,6 +45,9 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     @Inject
     LencseViewModel viewModel;
 
+    @Inject
+    DataUtils dataUtils;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ((LencsenaploApplication)getApplicationContext()).getGraph().inject(this);
@@ -70,8 +73,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         info.setCountMsg(lencseList.size()+" db bejegyzés mentve");
         Lencse max = Collections.max(lencseList, getLencseComparator());
         Lencse min = Collections.min(lencseList, getLencseComparator());
-        float elteltIdoMax = DataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
-        float elteltIdoMin = DataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
+        float elteltIdoMax = dataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
+        float elteltIdoMin = dataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
 
         String format = "%s: %s \n%.2f óra és %.2f perc";
 
@@ -169,7 +172,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         ArrayList<Entry> entries = new ArrayList<>(lencseList.size());
         for (int i = 0; i < lencseList.size(); i++) {
             entries.add(new Entry(i,
-                    DataUtils.elapsedTimeFloat(
+                    dataUtils.elapsedTimeFloat(
                             lencseList.get(i).getBetetelIdopont(),
                             lencseList.get(i).getKivetelIdopont()),
                     lencseList.get(i)));
@@ -179,7 +182,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        String elteltido = DataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
+        String elteltido = dataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
                 ((Lencse)e.getData()).getKivetelIdopont());
         Toast.makeText(this,  elteltido, Toast.LENGTH_SHORT).show();
     }
