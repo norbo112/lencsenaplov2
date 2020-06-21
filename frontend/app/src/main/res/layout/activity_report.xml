@@ -124,61 +124,34 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:weightSum="4"
-                    app:layout_constraintTop_toBottomOf="@+id/chart">
+                    android:weightSum="2"
+                    android:background="#000">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#000000"
-                        android:contentDescription="@string/imageview_report_desc"
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:onClick="@{() -> action.showStartDateSetter()}"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        app:srcCompat="@drawable/ic_baseline_date_range_24"
-                        tools:srcCompat="@drawable/ic_baseline_date_range_24" />
-
-                    <TextView
-                        android:id="@+id/vezerlo_szuro_start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#000"
-                        android:gravity="center_vertical"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
                         android:text="@{FormatUtils.getDateShortFormat(action.startDate)}"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        app:icon="@drawable/ic_baseline_date_range_24"
+                        app:iconTint="#4CAF50"
+                        app:cornerRadius="15dp"
+                        android:backgroundTint="@color/card_item_bg_label"
                         android:layout_weight="1"
-                        android:background="#000000"
-                        android:contentDescription="@string/imageview_report_desc"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:onClick="@{() -> action.showEndtDateSetter()}"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        app:srcCompat="@drawable/ic_baseline_date_range_24"
-                        tools:srcCompat="@drawable/ic_baseline_date_range_24" />
-
-                    <TextView
-                        android:id="@+id/vezerlo_szuro_end"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:background="#000"
-                        android:gravity="center_vertical"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
                         android:text="@{FormatUtils.getDateShortFormat(action.endDate)}"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
+                        app:icon="@drawable/ic_baseline_date_range_24"
+                        app:iconTint="#4CAF50"
+                        app:cornerRadius="15dp"
+                        android:backgroundTint="@color/card_item_bg_label"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -187,53 +160,35 @@
                     android:layout_height="wrap_content"
                     android:background="#000"
                     android:orientation="horizontal"
-                    android:paddingTop="10dp"
+                    android:paddingTop="5dp"
                     android:weightSum="2"
-                    android:layout_weight="1"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+                    android:layout_weight="1">
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        app:icon="@drawable/ic_baseline_autorenew_24"
+                        app:iconTint="#4CAF50"
+                        android:text="Frissít"
+                        android:backgroundTint="@color/card_item_bg_label"
+                        app:cornerRadius="15dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="5dp"
+                        android:onClick="@{() -> action.filter()}"/>
+
+                    <com.google.android.material.button.MaterialButton
                         android:layout_weight="1"
-                        android:padding="10dp"
-                        app:cardBackgroundColor="@color/card_item_bg_label"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="10dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:contentDescription="@string/imageview_report_desc"
-                            android:onClick="@{() -> action.filter()}"
-                            app:srcCompat="@drawable/ic_baseline_autorenew_24"
-                            tools:srcCompat="@drawable/ic_baseline_autorenew_24" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
+                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        app:icon="@drawable/ic_clear"
+                        app:iconTint="#4CAF50"
+                        android:text="Töröl"
+                        android:backgroundTint="@color/card_item_bg_label"
+                        app:cornerRadius="15dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        app:cardBackgroundColor="@color/card_item_bg_label"
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="10dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:contentDescription="@string/imageview_report_desc"
-                            android:onClick="@{() -> action.clearFilter()}"
-                            app:srcCompat="@drawable/ic_clear"
-                            tools:srcCompat="@drawable/ic_clear" />
-                    </androidx.cardview.widget.CardView>
+                        android:onClick="@{() -> action.clearFilter()}"/>
                 </LinearLayout>
             </LinearLayout>
 

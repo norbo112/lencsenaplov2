@@ -124,13 +124,14 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/kijelzo_linear_layout">
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnElkezd"
-                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:layout_weight="1"
+                            app:cornerRadius="10dp"
+                            android:backgroundTint="@color/card_item_bg_label"
                             android:onClick="@{() -> action.betesz(lencseadat)}"
                             android:text="@string/main_vezerlo_begin_label" />
 
@@ -141,13 +142,14 @@
                             android:checked="@{lencseadat.tisztitoViz == 1}"
                             android:onClick="@{() -> action.setTisztitoViz(lencseadat)}" />
 
-                        <Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnBefejez"
-                            style="@style/Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:layout_weight="1"
+                            app:cornerRadius="10dp"
+                            android:backgroundTint="@color/card_item_bg_label"
                             android:onClick="@{() -> action.kivesz(lencseadat)}"
                             android:text="@string/main_vezerlo_end_label" />
                     </LinearLayout>

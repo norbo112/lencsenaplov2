@@ -8,4 +8,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="MyTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorPrimary">#1A237E</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>
