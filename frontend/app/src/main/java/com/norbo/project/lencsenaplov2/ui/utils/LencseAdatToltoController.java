@@ -1,15 +1,10 @@
-package com.norbo.project.lencsenaplov2.ui.utilts;
+package com.norbo.project.lencsenaplov2.ui.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.webkit.WebChromeClient;
 
-import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
-import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 
 import java.io.BufferedReader;

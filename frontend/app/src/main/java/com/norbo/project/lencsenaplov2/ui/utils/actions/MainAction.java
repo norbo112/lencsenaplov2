@@ -1,9 +1,8 @@
-package com.norbo.project.lencsenaplov2.ui.utilts.actions;
+package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
-import android.webkit.JavascriptInterface;
 import android.widget.TimePicker;
 
 import androidx.lifecycle.MutableLiveData;
@@ -12,8 +11,8 @@ import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
-import com.norbo.project.lencsenaplov2.ui.utilts.MyToaster;
-import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
+import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
+import com.norbo.project.lencsenaplov2.ui.utils.UpdateLencseUI;
 
 import java.util.Calendar;
 import java.util.Date;

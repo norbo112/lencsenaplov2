@@ -9,8 +9,8 @@
             type="com.norbo.project.lencsenaplov2.ui.ReportActivity.Info" />
         <variable
             name="action"
-            type="com.norbo.project.lencsenaplov2.ui.utilts.actions.ReportAction" />
-        <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils"/>
+            type="com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction" />
+        <import type="com.norbo.project.lencsenaplov2.ui.utils.FormatUtils"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

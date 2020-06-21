@@ -18,12 +18,12 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
-import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
-import com.norbo.project.lencsenaplov2.ui.utilts.LencseAdatToltoController;
+import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
+import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
-import com.norbo.project.lencsenaplov2.ui.utilts.UpdateLencseUI;
-import com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction;
+import com.norbo.project.lencsenaplov2.ui.utils.UpdateLencseUI;
+import com.norbo.project.lencsenaplov2.ui.utils.actions.MainAction;
 
 import java.util.Collections;
 

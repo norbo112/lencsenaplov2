@@ -1,4 +1,4 @@
-package com.norbo.project.lencsenaplov2.ui.utilts;
+package com.norbo.project.lencsenaplov2.ui.utils;
 
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;

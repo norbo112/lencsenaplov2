@@ -3,13 +3,11 @@ package com.norbo.project.lencsenaplov2.ui;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -23,10 +21,10 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
-import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
-import com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils;
-import com.norbo.project.lencsenaplov2.ui.utilts.actions.ReportAction;
-import com.norbo.project.lencsenaplov2.ui.utilts.report.ReportUI;
+import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
+import com.norbo.project.lencsenaplov2.ui.utils.FormatUtils;
+import com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction;
+import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
 
 import java.util.ArrayList;
 import java.util.Collections;

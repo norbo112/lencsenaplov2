@@ -1,4 +1,4 @@
-package com.norbo.project.lencsenaplov2.ui.utilts.report;
+package com.norbo.project.lencsenaplov2.ui.utils.report;
 
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 

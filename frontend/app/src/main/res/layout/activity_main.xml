@@ -15,15 +15,15 @@
 
         <variable
             name="action"
-            type="com.norbo.project.lencsenaplov2.ui.utilts.actions.MainAction" />
+            type="com.norbo.project.lencsenaplov2.ui.utils.actions.MainAction" />
 
         <variable
             name="dataUtils"
-            type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils" />
+            type="com.norbo.project.lencsenaplov2.ui.utils.DataUtils" />
 
         <import type="com.norbo.project.lencsenaplov2.data.model.Lencse" />
 
-        <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils" />
+        <import type="com.norbo.project.lencsenaplov2.ui.utils.FormatUtils" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

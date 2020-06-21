@@ -2,7 +2,6 @@ package com.norbo.project.lencsenaplov2.ui.rcviews;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,7 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.LencseListItemBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
-import com.norbo.project.lencsenaplov2.ui.utilts.DataUtils;
+import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 
 import java.util.List;
 

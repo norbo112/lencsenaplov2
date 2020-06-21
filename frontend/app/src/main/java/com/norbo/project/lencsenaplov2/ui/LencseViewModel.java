@@ -9,9 +9,8 @@ import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.db.entities.KezdoIdopontEntity;
 import com.norbo.project.lencsenaplov2.db.entities.LencseEntity;
-import com.norbo.project.lencsenaplov2.ui.utilts.ConvertEntities;
+import com.norbo.project.lencsenaplov2.ui.utils.ConvertEntities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;

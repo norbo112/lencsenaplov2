@@ -10,9 +10,9 @@
 
         <variable
             name="dataUtils"
-            type="com.norbo.project.lencsenaplov2.ui.utilts.DataUtils" />
+            type="com.norbo.project.lencsenaplov2.ui.utils.DataUtils" />
 
-        <import type="com.norbo.project.lencsenaplov2.ui.utilts.FormatUtils" />
+        <import type="com.norbo.project.lencsenaplov2.ui.utils.FormatUtils" />
         <import type="android.view.View"/>
     </data>
 
