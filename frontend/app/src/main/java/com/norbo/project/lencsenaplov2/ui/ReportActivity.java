@@ -47,8 +47,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     @Inject
     DataUtils dataUtils;
 
-    @Inject
-    LencseInfoDialog infoDialog;
+    private LencseInfoDialog infoDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +56,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
         setSupportActionBar(binding.toolbar);
         if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        infoDialog = new LencseInfoDialog(this);
 
         viewModel.getLencseData().observe(this, (lencseList) -> {
             if(lencseList != null) {

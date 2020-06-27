@@ -16,4 +16,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="MyTheme.Dialog" parent="android:Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@color/card_item_bg_label</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:background">@color/card_item_bg_label</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
 </resources>

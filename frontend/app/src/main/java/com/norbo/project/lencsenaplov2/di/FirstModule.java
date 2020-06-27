@@ -66,10 +66,6 @@ public class FirstModule {
         return new DataUtils();
     }
 
-    LencseInfoDialog provideLencseInfoDialog(Context context) {
-        return new LencseInfoDialog(context);
-    }
-
     @Singleton
     @Provides
     Context getContext() {
