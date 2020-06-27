@@ -21,6 +21,7 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
+import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.FormatUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction;
@@ -45,6 +46,9 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Inject
     DataUtils dataUtils;
+
+    @Inject
+    LencseInfoDialog infoDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,9 +184,10 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-        String elteltido = dataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
-                ((Lencse)e.getData()).getKivetelIdopont());
-        Toast.makeText(this,  elteltido, Toast.LENGTH_SHORT).show();
+//        String elteltido = dataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
+//                ((Lencse)e.getData()).getKivetelIdopont());
+//        Toast.makeText(this,  elteltido, Toast.LENGTH_SHORT).show();
+        infoDialog.showDialog("Információ", "Lencse adatai", (Lencse) e.getData());
     }
 
     @Override

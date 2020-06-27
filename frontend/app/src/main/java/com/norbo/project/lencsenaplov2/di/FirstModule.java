@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
+import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
@@ -63,6 +64,10 @@ public class FirstModule {
     @Provides
     DataUtils provideDataUtils() {
         return new DataUtils();
+    }
+
+    LencseInfoDialog provideLencseInfoDialog(Context context) {
+        return new LencseInfoDialog(context);
     }
 
     @Singleton
