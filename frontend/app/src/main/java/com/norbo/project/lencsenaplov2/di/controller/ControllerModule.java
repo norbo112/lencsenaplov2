@@ -17,8 +17,6 @@ import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
