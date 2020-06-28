@@ -1,11 +1,13 @@
 package com.norbo.project.lencsenaplov2.di;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.room.Room;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
 import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
