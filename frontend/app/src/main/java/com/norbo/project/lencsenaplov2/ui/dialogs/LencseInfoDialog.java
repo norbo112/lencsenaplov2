@@ -36,8 +36,6 @@ public class LencseInfoDialog {
                 .setMessage(message)
                 .setIcon(R.drawable.ic_info_e)
                 .setView(itemBinding.getRoot())
-                .setPositiveButton("Ok", (dialog, which) -> {
-                    dialog.dismiss();
-                }).create().show();
+                .setPositiveButton("Ok", (dialog, which) -> dialog.dismiss()).create().show();
     }
 }
