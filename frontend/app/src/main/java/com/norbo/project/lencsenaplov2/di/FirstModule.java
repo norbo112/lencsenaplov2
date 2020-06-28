@@ -6,11 +6,12 @@ import androidx.room.Room;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
+import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
+import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
+import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 import com.norbo.project.lencsenaplov2.ui.utils.ConvertEntities;
-import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
-import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 
 import javax.inject.Singleton;
