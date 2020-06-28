@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -21,9 +20,9 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
 import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
-import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.FormatUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction;
 import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
@@ -43,19 +42,20 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     }
 
     @Inject
+    LencseViewModel viewModel;
+
+    @Inject
     LencseInfoDialog infoDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getGraph().controllerComponent(new ControllerModule(this)).inject(this);
+        getControllerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setSupportActionBar(binding.toolbar);
         if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        infoDialog = new LencseInfoDialog(this);
-
-        infoDialog.getViewModel().getLencseData().observe(this, (lencseList) -> {
+        viewModel.getLencseData().observe(this, (lencseList) -> {
             if(lencseList != null) {
                 binding.setInfo(getInfoMsg(lencseList));
                 binding.setAction(new ReportAction(this, lencseList));
@@ -64,6 +64,11 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
                 initChart(binding.chart, lencseList);
             }
         });
+    }
+
+    private ControllerComponent getControllerComponent() {
+        return ((LencsenaploApplication)getApplicationContext())
+                .getGraph().controllerComponent(new ControllerModule(this));
     }
 
     @SuppressLint("DefaultLocale")

@@ -17,4 +17,6 @@ public class LencsenaploApplication extends Application {
     public ApplicationGraph getGraph() {
         return graph;
     }
+
+    public Application getApplication() { return graph.getApplication(); }
 }

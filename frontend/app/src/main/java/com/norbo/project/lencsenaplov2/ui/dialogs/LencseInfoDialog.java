@@ -21,14 +21,11 @@ public class LencseInfoDialog {
     private static final String TAG = "LencseInfoDialog";
     private Activity context;
     private DataUtils utils;
-    private LencseViewModel viewModel;
 
     @Inject
-    public LencseInfoDialog(Activity context, DataUtils dataUtils, LencseViewModel viewModel) {
+    public LencseInfoDialog(Activity context, DataUtils dataUtils) {
         this.context = context;
         this.utils = dataUtils;
-        this.viewModel = viewModel;
-//        ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
     }
 
     public void showDialog(String title, String message, Lencse lencse) {
@@ -47,9 +44,5 @@ public class LencseInfoDialog {
 
     public DataUtils getUtils() {
         return utils;
-    }
-
-    public LencseViewModel getViewModel() {
-        return viewModel;
     }
 }
