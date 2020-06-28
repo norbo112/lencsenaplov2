@@ -56,7 +56,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ((LencsenaploApplication)getApplicationContext()).getGraph().inject(this);
         super.onCreate(savedInstanceState);
 
         setSupportActionBar(binding.toolbar);

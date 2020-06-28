@@ -8,8 +8,6 @@ import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
 import com.norbo.project.lencsenaplov2.ui.utils.ConvertEntities;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -24,11 +22,6 @@ public class ControllerModule {
     @Provides
     public Activity getActivity() {
         return activity;
-    }
-
-    @Provides
-    LencseViewModel lencseViewModel(LencseRepository repository, ConvertEntities convertEntities) {
-        return new LencseViewModel(repository, convertEntities);
     }
 
     @Provides

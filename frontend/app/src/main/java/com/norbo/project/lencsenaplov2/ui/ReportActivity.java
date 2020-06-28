@@ -47,8 +47,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        ((LencsenaploApplication)getApplicationContext()).getGraph().inject(this);
-        ((LencsenaploApplication)getApplicationContext()).getGraph().controllerComponent(new ControllerModule(this));
+        getGraph().controllerComponent(new ControllerModule(this)).inject(this);
         super.onCreate(savedInstanceState);
 
         setSupportActionBar(binding.toolbar);

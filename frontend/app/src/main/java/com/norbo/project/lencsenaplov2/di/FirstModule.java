@@ -52,6 +52,12 @@ public class FirstModule {
 
     @Singleton
     @Provides
+    LencseViewModel lencseViewModel(LencseRepository repository, ConvertEntities convertEntities) {
+        return new LencseViewModel(repository, convertEntities);
+    }
+
+    @Singleton
+    @Provides
     ConvertEntities provideConvertEntities() {
         return new ConvertEntities();
     }
