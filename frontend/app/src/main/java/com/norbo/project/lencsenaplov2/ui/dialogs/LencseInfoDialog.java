@@ -15,7 +15,6 @@ import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import javax.inject.Inject;
 
 public class LencseInfoDialog {
-    private static final String TAG = "LencseInfoDialog";
     private Context context;
 
     @Inject
