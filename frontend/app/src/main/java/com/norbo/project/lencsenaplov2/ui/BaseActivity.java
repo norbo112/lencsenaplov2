@@ -19,8 +19,6 @@ public class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     private final int layout_id;
     protected T binding;
 
-    private ApplicationGraph graph;
-
     public BaseActivity(int layout_id) {
         this.layout_id = layout_id;
     }
