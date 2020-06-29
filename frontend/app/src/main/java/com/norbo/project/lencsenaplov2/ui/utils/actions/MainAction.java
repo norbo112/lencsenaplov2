@@ -1,5 +1,6 @@
 package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utils.UpdateLencseUI;
@@ -30,8 +32,9 @@ public class MainAction {
     @Inject
     MyToaster myToaster;
 
-    public MainAction(Context context) {
-        ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
+    public MainAction(Activity context) {
+        ((LencsenaploApplication)context.getApplicationContext()).getGraph()
+            .controllerComponent(new ControllerModule(context)).inject(this);
         this.updateLencseUI = (UpdateLencseUI) context;
         this.context = context;
     }

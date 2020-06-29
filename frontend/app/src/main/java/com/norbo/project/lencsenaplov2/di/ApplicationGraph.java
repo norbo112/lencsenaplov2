@@ -1,14 +1,10 @@
 package com.norbo.project.lencsenaplov2.di;
 
+import android.app.Application;
 import android.content.Context;
 
-import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
-import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapter;
-import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
-import com.norbo.project.lencsenaplov2.ui.MainActivity;
-import com.norbo.project.lencsenaplov2.ui.ReportActivity;
-import com.norbo.project.lencsenaplov2.ui.utils.actions.MainAction;
-import com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 
 import javax.inject.Singleton;
 
@@ -18,18 +14,8 @@ import dagger.Component;
 @Component(modules = FirstModule.class)
 public interface ApplicationGraph {
     void inject(LencsenaploApplication lencsenaploApplication);
-    void inject(MainActivity mainActivity);
-    Context getContext();
 
-    void inject(MainAction mainAction);
+    ControllerComponent controllerComponent(ControllerModule controllerModule);
 
-    void inject(ReportActivity reportActivity);
-
-    void inject(LencseAdatToltoController adatTolto);
-
-    void inject(ReportAction reportAction);
-
-    void inject(LencseAdapter lencseAdapter);
-
-    void inject(LencseInfoDialog lencseInfoDialog);
+    Application getApplication();
 }

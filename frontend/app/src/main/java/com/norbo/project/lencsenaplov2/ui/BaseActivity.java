@@ -9,10 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.norbo.project.lencsenaplov2.di.ApplicationGraph;
+
 public class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     protected static final String LENCSE_SAVED_KEY = "com.norbo.project.lencsenaplov2.LENCSE_SAVED_KEY";
     private final int layout_id;
     protected T binding;
+
+    private ApplicationGraph graph;
 
     public BaseActivity(int layout_id) {
         this.layout_id = layout_id;

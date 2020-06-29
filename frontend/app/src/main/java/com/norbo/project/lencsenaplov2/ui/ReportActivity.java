@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -21,8 +20,9 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
-import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.FormatUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction;
 import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
@@ -45,19 +45,15 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     LencseViewModel viewModel;
 
     @Inject
-    DataUtils dataUtils;
-
-    private LencseInfoDialog infoDialog;
+    LencseInfoDialog infoDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ((LencsenaploApplication)getApplicationContext()).getGraph().inject(this);
+        getControllerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setSupportActionBar(binding.toolbar);
         if(getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        infoDialog = new LencseInfoDialog(this);
 
         viewModel.getLencseData().observe(this, (lencseList) -> {
             if(lencseList != null) {
@@ -70,14 +66,21 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         });
     }
 
+    private ControllerComponent getControllerComponent() {
+        return ((LencsenaploApplication)getApplicationContext())
+                .getGraph().controllerComponent(new ControllerModule(this));
+    }
+
     @SuppressLint("DefaultLocale")
     private Info getInfoMsg(List<Lencse> lencseList) {
         Info info = new Info();
         info.setCountMsg(lencseList.size()+" db bejegyzés mentve");
         Lencse max = Collections.max(lencseList, getLencseComparator());
         Lencse min = Collections.min(lencseList, getLencseComparator());
-        float elteltIdoMax = dataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
-        float elteltIdoMin = dataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
+//        float elteltIdoMax = dataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
+//        float elteltIdoMin = dataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
+        float elteltIdoMax = infoDialog.getUtils().elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
+        float elteltIdoMin = infoDialog.getUtils().elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
 
         String format = "%s: %s \n%.2f óra és %.2f perc";
 
@@ -175,7 +178,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         ArrayList<Entry> entries = new ArrayList<>(lencseList.size());
         for (int i = 0; i < lencseList.size(); i++) {
             entries.add(new Entry(i,
-                    dataUtils.elapsedTimeFloat(
+                    infoDialog.getUtils().elapsedTimeFloat(
                             lencseList.get(i).getBetetelIdopont(),
                             lencseList.get(i).getKivetelIdopont()),
                     lencseList.get(i)));

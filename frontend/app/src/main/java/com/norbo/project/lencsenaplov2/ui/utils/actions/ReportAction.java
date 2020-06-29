@@ -1,5 +1,6 @@
 package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +11,7 @@ import androidx.databinding.library.baseAdapters.BR;
 
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
 
@@ -37,13 +39,14 @@ public class ReportAction extends BaseObservable {
         this.context = context;
     }
 
-    public ReportAction(Context context, List<Lencse> lencseList) {
+    public ReportAction(Activity context, List<Lencse> lencseList) {
         this.context = context;
         this.lencseList = lencseList;
         this.origLencseList = lencseList;
         this.reportUI = (ReportUI) context;
         Collections.sort(lencseList, (o1,o2)-> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont()));
-        ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
+        ((LencsenaploApplication)context.getApplicationContext())
+                .getGraph().controllerComponent(new ControllerModule(context)).inject(this);
     }
 
     public void showStartDateSetter() {

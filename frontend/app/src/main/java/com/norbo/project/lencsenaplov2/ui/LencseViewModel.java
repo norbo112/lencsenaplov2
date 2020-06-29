@@ -22,13 +22,12 @@ import javax.inject.Singleton;
 public class LencseViewModel extends ViewModel {
     private LencseRepository repository;
     private LiveData<List<Lencse>> lencseData;
+    private ConvertEntities converter;
 
     @Inject
-    ConvertEntities converter;
-
-    @Inject
-    public LencseViewModel(LencseRepository repository) {
+    public LencseViewModel(LencseRepository repository, ConvertEntities converter) {
         this.repository = repository;
+        this.converter = converter;
         this.lencseData = Transformations.map(
                 repository.selectAll(), entities -> {
                     return entities.stream().map(lencseEntity -> converter.convertFromEntityLencse(lencseEntity))

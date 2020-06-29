@@ -1,5 +1,6 @@
 package com.norbo.project.lencsenaplov2.ui.rcviews;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.LencseListItemBinding;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
+import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 
 import java.util.List;
@@ -22,10 +24,13 @@ public class LencseAdapter extends RecyclerView.Adapter<LencseAdapter.ViewHolder
     @Inject
     DataUtils dataUtils;
     private List<Lencse> lencseList;
-    private Context context;
+    private Activity context;
 
-    public LencseAdapter(List<Lencse> lencseList, Context context) {
-        ((LencsenaploApplication)context.getApplicationContext()).getGraph().inject(this);
+    public LencseAdapter(List<Lencse> lencseList, Activity context) {
+        ((LencsenaploApplication)context.getApplicationContext())
+                .getGraph()
+                .controllerComponent(new ControllerModule(context))
+                .inject(this);
         this.lencseList = lencseList;
         this.context = context;
     }
