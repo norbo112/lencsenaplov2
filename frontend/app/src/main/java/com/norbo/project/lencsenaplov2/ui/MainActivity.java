@@ -39,8 +39,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     private MutableLiveData<Long> currentTime;
     private KezdoIdopont mainKezdoIdopont;
 
-    private ControllerComponent controllerComponent;
-
     @Inject
     LencseViewModel viewModel;
 
@@ -104,11 +102,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
                 currentTime.postValue(System.currentTimeMillis());
             }
         });
-    }
-
-    private ControllerComponent getControllerComponent() {
-        return ((LencsenaploApplication)getApplicationContext())
-                .getGraph().controllerComponent(new ControllerModule(this));
     }
 
     @Override

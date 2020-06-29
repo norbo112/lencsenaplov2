@@ -66,11 +66,6 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         });
     }
 
-    private ControllerComponent getControllerComponent() {
-        return ((LencsenaploApplication)getApplicationContext())
-                .getGraph().controllerComponent(new ControllerModule(this));
-    }
-
     @SuppressLint("DefaultLocale")
     private Info getInfoMsg(List<Lencse> lencseList) {
         Info info = new Info();
