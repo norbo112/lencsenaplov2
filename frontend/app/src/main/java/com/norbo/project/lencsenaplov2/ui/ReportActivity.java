@@ -69,22 +69,20 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         info.setCountMsg(lencseList.size()+" db bejegyzés mentve");
         Lencse max = Collections.max(lencseList, getLencseComparator());
         Lencse min = Collections.min(lencseList, getLencseComparator());
-//        float elteltIdoMax = dataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
-//        float elteltIdoMin = dataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
         float elteltIdoMax = infoDialog.getUtils().elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
         float elteltIdoMin = infoDialog.getUtils().elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
 
-        String format = "%s: %s \n%.2f óra és %.2f perc";
+        String format = "%s: %s \n%.0f óra és %.0f perc";
 
         info.setMaxMsg(String.format(format,
                 "Legtöbbet viselt nap",
                 FormatUtils.getDayShortFormat(max.getBetetelIdopont()),
-                (elteltIdoMax/60), (elteltIdoMax % 60), " perc."));
+                Math.floor(elteltIdoMax/60), Math.floor(elteltIdoMax % 60), " perc."));
 
         info.setMinMsg(String.format(format,
                 "Legkevesebb nap",
                 FormatUtils.getDayShortFormat(min.getBetetelIdopont()),
-                (elteltIdoMin/60), (elteltIdoMin % 60), " perc."));
+                Math.floor(elteltIdoMin/60), Math.floor(elteltIdoMin % 60), " perc."));
         return info;
     }
 
