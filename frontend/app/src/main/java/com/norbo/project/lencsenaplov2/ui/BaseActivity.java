@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
-import com.norbo.project.lencsenaplov2.di.ApplicationGraph;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
 import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
