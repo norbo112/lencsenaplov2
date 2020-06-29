@@ -10,6 +10,7 @@ public class LencsenaploApplication extends Application {
         super.onCreate();
         graph = DaggerApplicationGraph.builder()
                 .firstModule(new FirstModule(this))
+                .dataBaseModule(new DataBaseModule(this))
                 .build();
         graph.inject(this);
     }

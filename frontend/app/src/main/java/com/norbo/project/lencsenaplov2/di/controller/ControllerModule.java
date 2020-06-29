@@ -1,6 +1,7 @@
 package com.norbo.project.lencsenaplov2.di.controller;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 
 import androidx.room.Room;
@@ -42,21 +43,6 @@ public class ControllerModule {
     @Provides
     LencseInfoDialog lencseInfoDialog(Activity activity, DataUtils dataUtils) {
         return new LencseInfoDialog(activity, dataUtils);
-    }
-
-    @PerActivity
-    @Provides
-    LencseRepository provideLencseRepository(LencseDatabase database) {
-        return new LocalDatabaseLencseRepository(database);
-    }
-
-    @PerActivity
-    @Provides
-    LencseDatabase provideLencseDatabase(Context context) {
-        return Room.databaseBuilder(context, LencseDatabase.class, LencseDatabase.DB_NAME)
-                .addMigrations(LencseDatabase.MIGRATION_1_2)
-                .fallbackToDestructiveMigration()
-                .build();
     }
 
     @PerActivity
