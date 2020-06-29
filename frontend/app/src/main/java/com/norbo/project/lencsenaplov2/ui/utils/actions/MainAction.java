@@ -21,7 +21,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-public class MainAction {
+public class MainAction extends Action {
     private static final String TAG = MainAction.class.getSimpleName();
     private UpdateLencseUI updateLencseUI;
     private Context context;
@@ -33,10 +33,8 @@ public class MainAction {
     MyToaster myToaster;
 
     public MainAction(Activity context) {
-        ((LencsenaploApplication)context.getApplicationContext()).getGraph()
-            .controllerComponent(new ControllerModule(context)).inject(this);
+        super(context);
         this.updateLencseUI = (UpdateLencseUI) context;
-        this.context = context;
     }
 
     public void betesz(MutableLiveData<Lencse> lencseMutableLiveData) {

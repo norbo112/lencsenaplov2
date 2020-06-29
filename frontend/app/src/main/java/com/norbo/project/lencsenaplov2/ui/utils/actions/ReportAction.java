@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-public class ReportAction extends BaseObservable {
+public class ReportAction extends Action {
     private static final String TAG = "ReportAction";
     private Context context;
     private long startDate;
@@ -35,18 +35,12 @@ public class ReportAction extends BaseObservable {
     @Inject
     MyToaster toaster;
 
-    public ReportAction(Context context) {
-        this.context = context;
-    }
-
     public ReportAction(Activity context, List<Lencse> lencseList) {
-        this.context = context;
+        super(context);
         this.lencseList = lencseList;
         this.origLencseList = lencseList;
         this.reportUI = (ReportUI) context;
         Collections.sort(lencseList, (o1,o2)-> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont()));
-        ((LencsenaploApplication)context.getApplicationContext())
-                .getGraph().controllerComponent(new ControllerModule(context)).inject(this);
     }
 
     public void showStartDateSetter() {
