@@ -1,17 +1,12 @@
 package com.norbo.project.lencsenaplov2.di.controller;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 
-import androidx.room.Room;
-
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
-import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
-import com.norbo.project.lencsenaplov2.db.LencseDatabase;
 import com.norbo.project.lencsenaplov2.di.PerActivity;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
-import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
+import com.norbo.project.lencsenaplov2.ui.utils.lencseinfo.LencseInfoUtil;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
 import com.norbo.project.lencsenaplov2.ui.utils.ConvertEntities;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
@@ -41,8 +36,8 @@ public class ControllerModule {
 
     @PerActivity
     @Provides
-    LencseInfoDialog lencseInfoDialog(Activity activity, DataUtils dataUtils) {
-        return new LencseInfoDialog(activity, dataUtils);
+    LencseInfoUtil lencseInfoDialog(Activity activity, DataUtils dataUtils) {
+        return new LencseInfoUtil(activity, dataUtils);
     }
 
     @PerActivity
