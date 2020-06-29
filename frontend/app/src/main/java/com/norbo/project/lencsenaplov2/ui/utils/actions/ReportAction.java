@@ -2,17 +2,12 @@ package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.util.Log;
 
-import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
-import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
-import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
 
 import java.util.Calendar;
@@ -21,19 +16,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 public class ReportAction extends Action {
     private static final String TAG = "ReportAction";
-    private Context context;
     private long startDate;
     private long endDate;
     private List<Lencse> origLencseList;
     private List<Lencse> lencseList;
     private ReportUI reportUI;
-
-    @Inject
-    MyToaster toaster;
 
     public ReportAction(Activity context, List<Lencse> lencseList) {
         super(context);
@@ -71,7 +60,7 @@ public class ReportAction extends Action {
 
     public void filter() {
         if(startDate == 0 || endDate == 0) {
-            toaster.show("Kérlek válaszd ki kezdő és végpontokat");
+            myToaster.show("Kérlek válaszd ki kezdő és végpontokat");
             return;
         }
         List<Lencse> collect = origLencseList.stream()

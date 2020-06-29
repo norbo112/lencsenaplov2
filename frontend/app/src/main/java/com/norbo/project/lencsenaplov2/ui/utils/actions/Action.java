@@ -7,6 +7,8 @@ import androidx.databinding.BaseObservable;
 import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
 import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
 import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
+import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
+import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 
 import javax.inject.Inject;
 
@@ -14,12 +16,17 @@ public class Action extends BaseObservable {
     protected Activity context;
 
     @Inject
+    LencseViewModel lencseViewModel;
+
+    @Inject
+    MyToaster myToaster;
+
     public Action(Activity context) {
         this.context = context;
-        getCompontent(context).inject(this);
+        getCompontent().inject(this);
     }
 
-    private ControllerComponent getCompontent(Activity activity) {
+    protected ControllerComponent getCompontent() {
         return ((LencsenaploApplication)context.getApplicationContext()).getGraph().controllerComponent(new ControllerModule(context));
     }
 }

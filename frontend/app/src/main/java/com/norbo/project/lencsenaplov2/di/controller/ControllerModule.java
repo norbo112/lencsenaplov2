@@ -6,12 +6,15 @@ import android.content.Context;
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.di.PerActivity;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
+import com.norbo.project.lencsenaplov2.ui.utils.actions.Action;
 import com.norbo.project.lencsenaplov2.ui.utils.lencseinfo.LencseInfoUtil;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
 import com.norbo.project.lencsenaplov2.ui.utils.ConvertEntities;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
+
+import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,6 +25,12 @@ public class ControllerModule {
 
     public ControllerModule(Activity activity) {
         this.activity = activity;
+    }
+
+    @PerActivity
+    @Provides
+    public Action getAction(Activity activity) {
+        return new Action(activity);
     }
 
     @PerActivity
