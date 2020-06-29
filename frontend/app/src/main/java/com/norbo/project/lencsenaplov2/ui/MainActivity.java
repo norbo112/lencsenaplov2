@@ -18,9 +18,6 @@ import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityMainBinding;
-import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 import com.norbo.project.lencsenaplov2.ui.rcviews.LencseAdapterFactory;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
@@ -38,8 +35,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     private MutableLiveData<Lencse> lencseMutableLiveData;
     private MutableLiveData<Long> currentTime;
     private KezdoIdopont mainKezdoIdopont;
-
-    private ControllerComponent controllerComponent;
 
     @Inject
     LencseViewModel viewModel;
@@ -104,11 +99,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
                 currentTime.postValue(System.currentTimeMillis());
             }
         });
-    }
-
-    private ControllerComponent getControllerComponent() {
-        return ((LencsenaploApplication)getApplicationContext())
-                .getGraph().controllerComponent(new ControllerModule(this));
     }
 
     @Override

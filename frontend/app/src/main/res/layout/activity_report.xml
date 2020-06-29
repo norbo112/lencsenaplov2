@@ -6,7 +6,7 @@
     <data>
         <variable
             name="info"
-            type="com.norbo.project.lencsenaplov2.ui.ReportActivity.Info" />
+            type="com.norbo.project.lencsenaplov2.ui.utils.lencseinfo.LencseInfoUtil.Info" />
         <variable
             name="action"
             type="com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction" />

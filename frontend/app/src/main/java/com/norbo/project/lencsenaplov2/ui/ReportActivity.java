@@ -1,6 +1,5 @@
 package com.norbo.project.lencsenaplov2.ui;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
@@ -19,17 +18,13 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.ActivityReportBinding;
-import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
-import com.norbo.project.lencsenaplov2.ui.dialogs.LencseInfoDialog;
+import com.norbo.project.lencsenaplov2.ui.utils.lencseinfo.LencseInfoUtil;
 import com.norbo.project.lencsenaplov2.ui.utils.FormatUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.actions.ReportAction;
 import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +40,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
     LencseViewModel viewModel;
 
     @Inject
-    LencseInfoDialog infoDialog;
+    LencseInfoUtil lencseInfoUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,51 +52,13 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
         viewModel.getLencseData().observe(this, (lencseList) -> {
             if(lencseList != null) {
-                binding.setInfo(getInfoMsg(lencseList));
+                binding.setInfo(lencseInfoUtil.getInfo(lencseList));
                 binding.setAction(new ReportAction(this, lencseList));
                 Collections.sort(lencseList,
                         ((o1, o2) -> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont())));
                 initChart(binding.chart, lencseList);
             }
         });
-    }
-
-    private ControllerComponent getControllerComponent() {
-        return ((LencsenaploApplication)getApplicationContext())
-                .getGraph().controllerComponent(new ControllerModule(this));
-    }
-
-    @SuppressLint("DefaultLocale")
-    private Info getInfoMsg(List<Lencse> lencseList) {
-        Info info = new Info();
-        info.setCountMsg(lencseList.size()+" db bejegyzés mentve");
-        Lencse max = Collections.max(lencseList, getLencseComparator());
-        Lencse min = Collections.min(lencseList, getLencseComparator());
-//        float elteltIdoMax = dataUtils.elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
-//        float elteltIdoMin = dataUtils.elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
-        float elteltIdoMax = infoDialog.getUtils().elapsedTimeFloat(max.getBetetelIdopont(), max.getKivetelIdopont());
-        float elteltIdoMin = infoDialog.getUtils().elapsedTimeFloat(min.getBetetelIdopont(), min.getKivetelIdopont());
-
-        String format = "%s: %s \n%.2f óra és %.2f perc";
-
-        info.setMaxMsg(String.format(format,
-                "Legtöbbet viselt nap",
-                FormatUtils.getDayShortFormat(max.getBetetelIdopont()),
-                (elteltIdoMax/60), (elteltIdoMax % 60), " perc."));
-
-        info.setMinMsg(String.format(format,
-                "Legkevesebb nap",
-                FormatUtils.getDayShortFormat(min.getBetetelIdopont()),
-                (elteltIdoMin/60), (elteltIdoMin % 60), " perc."));
-        return info;
-    }
-
-    private Comparator<Lencse> getLencseComparator() {
-        return (o1, o2) -> {
-            long o1_elt = o1.getKivetelIdopont() - o1.getBetetelIdopont();
-            long o2_elt = o2.getKivetelIdopont() - o2.getBetetelIdopont();
-            return Long.compare(o1_elt, o2_elt);
-        };
     }
 
     private void initChart(LineChart chart, List<Lencse> list) {
@@ -178,9 +135,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         ArrayList<Entry> entries = new ArrayList<>(lencseList.size());
         for (int i = 0; i < lencseList.size(); i++) {
             entries.add(new Entry(i,
-                    infoDialog.getUtils().elapsedTimeFloat(
-                            lencseList.get(i).getBetetelIdopont(),
-                            lencseList.get(i).getKivetelIdopont()),
+                    lencseInfoUtil.elapsedTimeFloat(lencseList.get(i)),
                     lencseList.get(i)));
         }
         return entries;
@@ -191,7 +146,7 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 //        String elteltido = dataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
 //                ((Lencse)e.getData()).getKivetelIdopont());
 //        Toast.makeText(this,  elteltido, Toast.LENGTH_SHORT).show();
-        infoDialog.showDialog("Információ", "Lencse adatai", (Lencse) e.getData());
+        lencseInfoUtil.showDialog("Információ", "Lencse adatai", (Lencse) e.getData());
     }
 
     @Override
@@ -207,35 +162,5 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         binding.chart.fitScreen();
         binding.chart.notifyDataSetChanged();
         binding.chart.invalidate();
-    }
-
-    public class Info {
-        private String countMsg;
-        private String minMsg;
-        private String maxMsg;
-
-        public String getCountMsg() {
-            return countMsg;
-        }
-
-        public void setCountMsg(String countMsg) {
-            this.countMsg = countMsg;
-        }
-
-        public String getMinMsg() {
-            return minMsg;
-        }
-
-        public void setMinMsg(String minMsg) {
-            this.minMsg = minMsg;
-        }
-
-        public String getMaxMsg() {
-            return maxMsg;
-        }
-
-        public void setMaxMsg(String maxMsg) {
-            this.maxMsg = maxMsg;
-        }
     }
 }
