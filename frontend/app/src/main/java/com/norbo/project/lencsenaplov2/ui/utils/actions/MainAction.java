@@ -2,24 +2,33 @@ package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.util.Log;
 import android.widget.TimePicker;
 
+import androidx.databinding.BaseObservable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.norbo.project.lencsenaplov2.data.model.KezdoIdopont;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
+import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
+import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utils.UpdateLencseUI;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class MainAction extends Action {
+public class MainAction extends BaseObservable {
     private static final String TAG = MainAction.class.getSimpleName();
+    private final Context context;
+    private final LencseViewModel lencseViewModel;
+    private final MyToaster myToaster;
     private UpdateLencseUI updateLencseUI;
 
-    public MainAction(Activity context) {
-        super(context);
+    public MainAction(Context context, LencseViewModel lencseViewModel, MyToaster myToaster) {
+        this.context = context;
+        this.lencseViewModel = lencseViewModel;
+        this.myToaster = myToaster;
         this.updateLencseUI = (UpdateLencseUI) context;
     }
 
@@ -61,9 +70,10 @@ public class MainAction extends Action {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 date.setHours(hourOfDay);
                 date.setMinutes(minute);
-                lencseViewModel.deleteKezdoIdopont(lencseadat.getValue().getBetetelIdopont());
+                lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
                 lencseViewModel.insertKezdoIdopont(new KezdoIdopont(date.getTime()));
-                lencseadat.getValue().setBetetelIdopont(date.getTime());
+                value.setBetetelIdopont(date.getTime());
+                lencseadat.postValue(value);
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
 
@@ -82,5 +92,9 @@ public class MainAction extends Action {
         } else {
             Log.i(TAG, "setTisztitoViz: Lencse Adat null");
         }
+    }
+
+    public LencseViewModel getLencseViewModel() {
+        return lencseViewModel;
     }
 }

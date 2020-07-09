@@ -28,6 +28,9 @@ import java.util.Collections;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements UpdateLencseUI {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int FILE_CHOOSER_CODE = 100;
@@ -36,17 +39,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     private MutableLiveData<Long> currentTime;
     private KezdoIdopont mainKezdoIdopont;
 
-    @Inject
-    LencseViewModel viewModel;
+//    @Inject LencseViewModel viewModel;
 
-    @Inject
-    LencseAdapterFactory lencseAdapterFactory;
+    @Inject LencseAdapterFactory lencseAdapterFactory;
 
-    @Inject
-    LencseAdatToltoController adatTolto;
+    @Inject LencseAdatToltoController adatTolto;
 
-    @Inject
-    DataUtils dataUtils;
+    @Inject DataUtils dataUtils;
+
+    @Inject MainAction mainAction;
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -55,7 +56,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getControllerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setSupportActionBar(binding.toolbar);
@@ -74,15 +74,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
         binding.setLifecycleOwner(this);
         binding.setDataUtils(dataUtils);
         binding.setLencseadat(lencseMutableLiveData);
-        binding.setAction(new MainAction(this));
+        binding.setAction(mainAction);
         binding.setElapsedtime(currentTime);
 
-        viewModel.getLencseData().observe(this, lencseList -> {
+        mainAction.getLencseViewModel().getLencseData().observe(this, lencseList -> {
             if(lencseList.size() != 0) {
                 Collections.sort(lencseList,
                         ((o1, o2) -> Long.compare(o2.getBetetelIdopont(), o1.getBetetelIdopont())));
                 binding.lencsercviewTitle.setText(lencseList.size()+" lencseadat rögzítve");
-                binding.lencsercview.setAdapter(lencseAdapterFactory.create(MainActivity.this, lencseList));
+                binding.lencsercview.setAdapter(lencseAdapterFactory.create(lencseList));
                 binding.lencsercview.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 binding.lencsercview.setItemAnimator(new DefaultItemAnimator());
             } else {
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
             }
         });
 
-        viewModel.getKezdoIdopont().observe(this, kezdoIdopont -> {
+        mainAction.getLencseViewModel().getKezdoIdopont().observe(this, kezdoIdopont -> {
             if(kezdoIdopont != null) {
                 mainKezdoIdopont = kezdoIdopont;
                 Lencse value = lencseMutableLiveData.getValue();
