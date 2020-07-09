@@ -144,9 +144,6 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-//        String elteltido = dataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
-//                ((Lencse)e.getData()).getKivetelIdopont());
-//        Toast.makeText(this,  elteltido, Toast.LENGTH_SHORT).show();
         lencseInfoUtil.showDialog("Információ", "Lencse adatai", (Lencse) e.getData());
     }
 
