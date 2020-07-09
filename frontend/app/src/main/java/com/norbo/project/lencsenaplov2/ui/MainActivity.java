@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
     private MutableLiveData<Long> currentTime;
     private KezdoIdopont mainKezdoIdopont;
 
-//    @Inject LencseViewModel viewModel;
+    @Inject LencseViewModel viewModel;
 
     @Inject LencseAdapterFactory lencseAdapterFactory;
 
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
         binding.setAction(mainAction);
         binding.setElapsedtime(currentTime);
 
-        mainAction.getLencseViewModel().getLencseData().observe(this, lencseList -> {
+        viewModel.getLencseData().observe(this, lencseList -> {
             if(lencseList.size() != 0) {
                 Collections.sort(lencseList,
                         ((o1, o2) -> Long.compare(o2.getBetetelIdopont(), o1.getBetetelIdopont())));
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
             }
         });
 
-        mainAction.getLencseViewModel().getKezdoIdopont().observe(this, kezdoIdopont -> {
+        viewModel.getKezdoIdopont().observe(this, kezdoIdopont -> {
             if(kezdoIdopont != null) {
                 mainKezdoIdopont = kezdoIdopont;
                 Lencse value = lencseMutableLiveData.getValue();

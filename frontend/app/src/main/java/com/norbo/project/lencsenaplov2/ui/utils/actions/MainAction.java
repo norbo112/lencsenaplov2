@@ -65,16 +65,13 @@ public class MainAction extends BaseObservable {
 
         final Date date = new Date(System.currentTimeMillis());
         Calendar calendar = Calendar.getInstance();
-        TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                date.setHours(hourOfDay);
-                date.setMinutes(minute);
-                lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
-                lencseViewModel.insertKezdoIdopont(new KezdoIdopont(date.getTime()));
-                value.setBetetelIdopont(date.getTime());
-                lencseadat.postValue(value);
-            }
+        TimePickerDialog timePickerDialog = new TimePickerDialog(context, (view, hourOfDay, minute) -> {
+            date.setHours(hourOfDay);
+            date.setMinutes(minute);
+            lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
+            lencseViewModel.insertKezdoIdopont(new KezdoIdopont(date.getTime()));
+            value.setBetetelIdopont(date.getTime());
+            lencseadat.postValue(value);
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
 
         timePickerDialog.show();

@@ -18,13 +18,11 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-@Singleton
 public class LencseViewModel extends ViewModel {
     private LencseRepository repository;
     private LiveData<List<Lencse>> lencseData;
     private ConvertEntities converter;
 
-    @Inject
     public LencseViewModel(LencseRepository repository, ConvertEntities converter) {
         this.repository = repository;
         this.converter = converter;
