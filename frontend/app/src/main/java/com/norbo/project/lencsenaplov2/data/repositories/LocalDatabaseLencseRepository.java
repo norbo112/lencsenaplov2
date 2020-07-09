@@ -24,23 +24,17 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
 
     @Override
     public CompletableFuture<Long> insert(final LencseEntity lencse) {
-        return CompletableFuture.supplyAsync(() -> {
-            return lencseDatabase.lencseDao().insert(lencse);
-        });
+        return CompletableFuture.supplyAsync(() -> lencseDatabase.lencseDao().insert(lencse));
     }
 
     @Override
     public CompletableFuture<Long> insert(final KezdoIdopontEntity kezdoIdopont) {
-        return CompletableFuture.supplyAsync(()-> {
-            return lencseDatabase.kezdoIdopontDao().insert(kezdoIdopont);
-        });
+        return CompletableFuture.supplyAsync(()-> lencseDatabase.kezdoIdopontDao().insert(kezdoIdopont));
     }
 
     @Override
     public void insertAll(List<LencseEntity> lencseList) {
-        LencseDatabase.executor.execute(() -> {
-            lencseDatabase.lencseDao().insertAll(lencseList);
-        });
+        LencseDatabase.executor.execute(() -> lencseDatabase.lencseDao().insertAll(lencseList));
     }
 
     @Override
@@ -55,11 +49,6 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
 
     @Override
     public void deleteKezdoIdopont(final long betetelIdopont) {
-        LencseDatabase.executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                lencseDatabase.kezdoIdopontDao().delete(betetelIdopont);
-            }
-        });
+        LencseDatabase.executor.execute(() -> lencseDatabase.kezdoIdopontDao().delete(betetelIdopont));
     }
 }

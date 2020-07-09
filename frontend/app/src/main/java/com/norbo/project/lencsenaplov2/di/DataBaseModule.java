@@ -16,12 +16,14 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.components.ApplicationComponent;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @Module
 @InstallIn(ApplicationComponent.class)
 public class DataBaseModule {
 
     @Provides
+    @Singleton
     LencseDatabase lencseDatabase(Application application) {
         return Room.databaseBuilder(application, LencseDatabase.class, LencseDatabase.DB_NAME)
                 .addMigrations(LencseDatabase.MIGRATION_1_2)
@@ -30,16 +32,19 @@ public class DataBaseModule {
     }
 
     @Provides
+    @Singleton
     LencseRepository lencseRepository(LencseDatabase database) {
         return new LocalDatabaseLencseRepository(database);
     }
 
     @Provides
+    @Singleton
     LencseViewModel lencseViewModel(LencseRepository repository, ConvertEntities convertEntities) {
         return new LencseViewModel(repository, convertEntities);
     }
 
     @Provides
+    @Singleton
     ConvertEntities provideConvertEntities() {
         return new ConvertEntities();
     }

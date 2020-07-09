@@ -1,6 +1,5 @@
 package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.Log;
@@ -10,7 +9,6 @@ import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
-import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
 
