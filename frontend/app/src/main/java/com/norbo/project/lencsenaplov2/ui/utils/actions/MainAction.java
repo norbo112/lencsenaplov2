@@ -1,10 +1,8 @@
 package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
-import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.util.Log;
-import android.widget.TimePicker;
 
 import androidx.databinding.BaseObservable;
 import androidx.lifecycle.MutableLiveData;

@@ -83,10 +83,12 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         xAxis.setEnabled(true);
         xAxis.setTextColor(Color.WHITE);
         xAxis.setValueFormatter(getMyFormatter(list));
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
 
         setChartData(chart, list);
-        chart.animateX(1500);
 
+        chart.animateX(1500);
         chart.getLegend().setEnabled(false);
     }
 
