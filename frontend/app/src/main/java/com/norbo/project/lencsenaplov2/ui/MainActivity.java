@@ -7,9 +7,12 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,8 +26,11 @@ import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.LencseAdatToltoController;
 import com.norbo.project.lencsenaplov2.ui.utils.UpdateLencseUI;
 import com.norbo.project.lencsenaplov2.ui.utils.actions.MainAction;
+import com.norbo.project.lencsenaplov2.ui.utils.cleanlencelist.TisztitoVizElem;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -131,8 +137,28 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements U
             startActivity(new Intent(this, ReportActivity.class));
         } else if(item.getItemId() == R.id.menu_add_list) {
             loadLencseAdat();
+        } else if(item.getItemId() == R.id.menu_tisztitoviz) {
+            showTisztitoVizDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showTisztitoVizDialog() {
+        viewModel.getLencseTisztitoViz().observe(this, lencseList -> {
+            if(lencseList != null && lencseList.size() > 0) {
+                List<TisztitoVizElem> tisztitoVizElems = lencseList.stream().map(entities -> new TisztitoVizElem(entities.getBetetelIdopont()))
+                        .collect(Collectors.toList());
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Tisztító folyadék")
+                        .setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tisztitoVizElems),
+                                null)
+                        .setPositiveButton("ok", (dialog, which) -> dialog.dismiss())
+                        .show();
+            } else {
+                Toast.makeText(this, "Nincs rögzítve ilyen adat", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

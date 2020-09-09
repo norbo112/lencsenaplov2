@@ -12,4 +12,9 @@
         android:icon="@drawable/ic_baseline_add_box_24"
         android:title="@string/menu_add_list_label"
         app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/menu_tisztitoviz"
+        android:icon="@drawable/ic_waves"
+        android:title="@string/menu_tisztito_viz_label"
+        app:showAsAction="ifRoom|withText" />
 </menu>

@@ -51,4 +51,9 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
     public void deleteKezdoIdopont(final long betetelIdopont) {
         LencseDatabase.executor.execute(() -> lencseDatabase.kezdoIdopontDao().delete(betetelIdopont));
     }
+
+    @Override
+    public LiveData<List<LencseEntity>> getLencseTisztitoViz() {
+        return lencseDatabase.lencseDao().selectTisztitoViz();
+    }
 }

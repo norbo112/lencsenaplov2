@@ -26,4 +26,7 @@ public interface LencseDao {
 
     @Query("SELECT count(*) FROM lencse_table")
     int countRows();
+
+    @Query("SELECT * FROM lencse_table WHERE tisztitoViz = 1")
+    LiveData<List<LencseEntity>> selectTisztitoViz();
 }

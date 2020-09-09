@@ -2,6 +2,7 @@ package com.norbo.project.lencsenaplov2.data.api;
 
 import androidx.lifecycle.LiveData;
 
+import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.db.entities.KezdoIdopontEntity;
 import com.norbo.project.lencsenaplov2.db.entities.LencseEntity;
 
@@ -14,6 +15,8 @@ public interface LencseRepository {
 
     LiveData<KezdoIdopontEntity> selectKezdoIdopont();
     CompletableFuture<Long> insert(KezdoIdopontEntity kezdoIdopont);
+
+    LiveData<List<LencseEntity>> getLencseTisztitoViz();
 
     void deleteKezdoIdopont(long betetelIdopont);
 
