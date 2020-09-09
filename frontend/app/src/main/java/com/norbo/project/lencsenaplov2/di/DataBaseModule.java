@@ -7,22 +7,22 @@ import androidx.room.Room;
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
 import com.norbo.project.lencsenaplov2.data.repositories.LocalDatabaseLencseRepository;
 import com.norbo.project.lencsenaplov2.db.LencseDatabase;
+import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
+import com.norbo.project.lencsenaplov2.ui.utils.ConvertEntities;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.hilt.InstallIn;
+import dagger.hilt.android.components.ApplicationComponent;
 
 @Module
+@InstallIn(ApplicationComponent.class)
 public class DataBaseModule {
-    private Application application;
 
-    public DataBaseModule(Application application) {
-        this.application = application;
-    }
-
-    @Singleton
     @Provides
+    @Singleton
     LencseDatabase lencseDatabase(Application application) {
         return Room.databaseBuilder(application, LencseDatabase.class, LencseDatabase.DB_NAME)
                 .addMigrations(LencseDatabase.MIGRATION_1_2)
@@ -30,9 +30,21 @@ public class DataBaseModule {
                 .build();
     }
 
-    @Singleton
     @Provides
+    @Singleton
     LencseRepository lencseRepository(LencseDatabase database) {
         return new LocalDatabaseLencseRepository(database);
+    }
+
+    @Provides
+    @Singleton
+    LencseViewModel lencseViewModel(LencseRepository repository, ConvertEntities convertEntities) {
+        return new LencseViewModel(repository, convertEntities);
+    }
+
+    @Provides
+    @Singleton
+    ConvertEntities provideConvertEntities() {
+        return new ConvertEntities();
     }
 }

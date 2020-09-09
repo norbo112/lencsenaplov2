@@ -1,32 +1,32 @@
 package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
-import android.app.Activity;
+import android.content.Context;
 
 import androidx.databinding.BaseObservable;
 
-import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 
-import javax.inject.Inject;
-
 public class Action extends BaseObservable {
-    protected Activity context;
+    protected Context context;
+    protected LencseViewModel lencseViewModel;
+    protected MyToaster myToaster;
 
-    @Inject
-    LencseViewModel lencseViewModel;
-
-    @Inject
-    MyToaster myToaster;
-
-    public Action(Activity context) {
+    public Action(Context context, LencseViewModel lencseViewModel, MyToaster myToaster) {
         this.context = context;
-        getCompontent().inject(this);
+        this.lencseViewModel = lencseViewModel;
+        this.myToaster = myToaster;
     }
 
-    protected ControllerComponent getCompontent() {
-        return ((LencsenaploApplication)context.getApplicationContext()).getGraph().controllerComponent(new ControllerModule(context));
+    public Context getContext() {
+        return context;
+    }
+
+    public LencseViewModel getLencseViewModel() {
+        return lencseViewModel;
+    }
+
+    public MyToaster getMyToaster() {
+        return myToaster;
     }
 }

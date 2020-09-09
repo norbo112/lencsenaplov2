@@ -9,10 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
-import com.norbo.project.lencsenaplov2.di.LencsenaploApplication;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerComponent;
-import com.norbo.project.lencsenaplov2.di.controller.ControllerModule;
-
 public class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
     protected static final String LENCSE_SAVED_KEY = "com.norbo.project.lencsenaplov2.LENCSE_SAVED_KEY";
     private final int layout_id;
@@ -28,10 +24,5 @@ public class BaseActivity<T extends ViewDataBinding> extends AppCompatActivity {
         binding = DataBindingUtil.inflate(LayoutInflater.from(this), layout_id, null, false);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(binding.getRoot());
-    }
-
-    protected ControllerComponent getControllerComponent() {
-        return ((LencsenaploApplication)getApplicationContext())
-                .getGraph().controllerComponent(new ControllerModule(this));
     }
 }

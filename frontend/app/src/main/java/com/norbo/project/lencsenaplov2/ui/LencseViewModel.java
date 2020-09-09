@@ -18,21 +18,20 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-@Singleton
 public class LencseViewModel extends ViewModel {
     private LencseRepository repository;
     private LiveData<List<Lencse>> lencseData;
+    private LiveData<List<Lencse>> lencseTisztitoViz;
     private ConvertEntities converter;
 
-    @Inject
     public LencseViewModel(LencseRepository repository, ConvertEntities converter) {
         this.repository = repository;
         this.converter = converter;
         this.lencseData = Transformations.map(
-                repository.selectAll(), entities -> {
-                    return entities.stream().map(lencseEntity -> converter.convertFromEntityLencse(lencseEntity))
-                    .collect(Collectors.toList());
-                });
+                repository.selectAll(), entities -> entities.stream().map(converter::convertFromEntityLencse)
+                .collect(Collectors.toList()));
+        this.lencseTisztitoViz = Transformations.map(repository.getLencseTisztitoViz(), entities ->
+            entities.stream().map(converter::convertFromEntityLencse).collect(Collectors.toList()));
     }
 
     public LiveData<KezdoIdopont> getKezdoIdopont() {
@@ -58,6 +57,10 @@ public class LencseViewModel extends ViewModel {
 
     public CompletableFuture<Long> insertKezdoIdopont(KezdoIdopont kezdoIdopont) {
         return repository.insert(new KezdoIdopontEntity(kezdoIdopont.getKezdoIdopont()));
+    }
+
+    public LiveData<List<Lencse>> getLencseTisztitoViz() {
+        return lencseTisztitoViz;
     }
 
     public void deleteKezdoIdopont(long betetelIdopont) {

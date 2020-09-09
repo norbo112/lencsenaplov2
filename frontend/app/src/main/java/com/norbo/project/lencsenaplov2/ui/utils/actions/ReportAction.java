@@ -1,13 +1,15 @@
 package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.util.Log;
 
+import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.library.baseAdapters.BR;
 
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
+import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utils.report.ReportUI;
 
 import java.util.Calendar;
@@ -16,19 +18,25 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ReportAction extends Action {
+public class ReportAction extends BaseObservable {
     private static final String TAG = "ReportAction";
+    private final Context context;
+    private final MyToaster myToaster;
     private long startDate;
     private long endDate;
     private List<Lencse> origLencseList;
     private List<Lencse> lencseList;
     private ReportUI reportUI;
 
-    public ReportAction(Activity context, List<Lencse> lencseList) {
-        super(context);
+    public ReportAction(Context context, MyToaster myToaster) {
+        this.context = context;
+        this.myToaster = myToaster;
+        this.reportUI = (ReportUI) context;
+    }
+
+    public void setLencseList(List<Lencse> lencseList) {
         this.lencseList = lencseList;
         this.origLencseList = lencseList;
-        this.reportUI = (ReportUI) context;
         Collections.sort(lencseList, (o1,o2)-> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont()));
     }
 

@@ -1,7 +1,7 @@
 package com.norbo.project.lencsenaplov2.ui.utils.lencseinfo;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AlertDialog;
@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import com.norbo.project.lencsenaplov2.R;
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.databinding.LencseListItemBinding;
-import com.norbo.project.lencsenaplov2.ui.ReportActivity;
 import com.norbo.project.lencsenaplov2.ui.utils.DataUtils;
 import com.norbo.project.lencsenaplov2.ui.utils.FormatUtils;
 
@@ -19,16 +18,14 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
-@Singleton
 public class LencseInfoUtil {
     private static final String TAG = "LencseInfoDialog";
-    private Activity context;
+    private Context context;
     private DataUtils dataUtils;
 
     @Inject
-    public LencseInfoUtil(Activity context, DataUtils dataUtils) {
+    public LencseInfoUtil(Context context, DataUtils dataUtils) {
         this.context = context;
         this.dataUtils = dataUtils;
     }

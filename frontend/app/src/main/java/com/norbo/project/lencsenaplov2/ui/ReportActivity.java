@@ -30,21 +30,21 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ReportActivity extends BaseActivity<ActivityReportBinding> implements OnChartValueSelectedListener, ReportUI {
     private static final String TAG = "ReportActivity";
     public ReportActivity() {
         super(R.layout.activity_report);
     }
 
-    @Inject
-    LencseViewModel viewModel;
-
-    @Inject
-    LencseInfoUtil lencseInfoUtil;
+    @Inject LencseViewModel viewModel;
+    @Inject LencseInfoUtil lencseInfoUtil;
+    @Inject ReportAction reportAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getControllerComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setSupportActionBar(binding.toolbar);
@@ -53,7 +53,8 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         viewModel.getLencseData().observe(this, (lencseList) -> {
             if(lencseList != null) {
                 binding.setInfo(lencseInfoUtil.getInfo(lencseList));
-                binding.setAction(new ReportAction(this, lencseList));
+                reportAction.setLencseList(lencseList);
+                binding.setAction(reportAction);
                 Collections.sort(lencseList,
                         ((o1, o2) -> Long.compare(o1.getBetetelIdopont(), o2.getBetetelIdopont())));
                 initChart(binding.chart, lencseList);
@@ -82,10 +83,12 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
         xAxis.setEnabled(true);
         xAxis.setTextColor(Color.WHITE);
         xAxis.setValueFormatter(getMyFormatter(list));
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
 
         setChartData(chart, list);
-        chart.animateX(1500);
 
+        chart.animateX(1500);
         chart.getLegend().setEnabled(false);
     }
 
@@ -143,9 +146,6 @@ public class ReportActivity extends BaseActivity<ActivityReportBinding> implemen
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-//        String elteltido = dataUtils.elapsedTime(((Lencse)e.getData()).getBetetelIdopont(),
-//                ((Lencse)e.getData()).getKivetelIdopont());
-//        Toast.makeText(this,  elteltido, Toast.LENGTH_SHORT).show();
         lencseInfoUtil.showDialog("Információ", "Lencse adatai", (Lencse) e.getData());
     }
 
