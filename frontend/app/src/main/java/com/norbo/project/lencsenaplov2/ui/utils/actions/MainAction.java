@@ -1,7 +1,10 @@
 package com.norbo.project.lencsenaplov2.ui.utils.actions;
 
 import android.app.TimePickerDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.databinding.BaseObservable;
@@ -12,6 +15,7 @@ import com.norbo.project.lencsenaplov2.data.model.Lencse;
 import com.norbo.project.lencsenaplov2.ui.LencseViewModel;
 import com.norbo.project.lencsenaplov2.ui.utils.MyToaster;
 import com.norbo.project.lencsenaplov2.ui.utils.UpdateLencseUI;
+import com.norbo.project.lencsenaplov2.widget.LenceLogAppWidget;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +42,7 @@ public class MainAction extends BaseObservable {
 
             lencseViewModel.insertKezdoIdopont(new KezdoIdopont(value.getBetetelIdopont()));
             Log.i(TAG, "betesz: lefutott");
+            updateWidget();
         }
     }
 
@@ -50,6 +55,8 @@ public class MainAction extends BaseObservable {
             lencseViewModel.insert(value).whenComplete((id, throwable) -> myToaster.show("Lencseadat rögzítve: "+id));
             lencseViewModel.deleteKezdoIdopont(value.getBetetelIdopont());
             updateLencseUI.clearLencseUi();
+
+            updateWidget();
         }
 
         Log.i(TAG, "kivesz: lefutott");
@@ -91,5 +98,14 @@ public class MainAction extends BaseObservable {
 
     public LencseViewModel getLencseViewModel() {
         return lencseViewModel;
+    }
+
+    public void updateWidget() {
+        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName thisWidget = new ComponentName(context, LenceLogAppWidget.class);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        context.sendBroadcast(intent);
     }
 }

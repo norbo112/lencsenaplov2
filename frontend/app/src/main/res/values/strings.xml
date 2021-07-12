@@ -12,4 +12,6 @@
     <string name="imageview_report_desc">Időszak beállítása</string>
     <string name="imageview_report_clear_desc">Töröl</string>
     <string name="menu_tisztito_viz_label">Tisztitó Víz</string>
+    <string name="appwidget_text">Nincs adat…</string>
+    <string name="add_widget">Add widget</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.norbo.project.lencsenaplov2.data.repositories;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 
 import com.norbo.project.lencsenaplov2.data.api.LencseRepository;
@@ -45,6 +47,11 @@ public class LocalDatabaseLencseRepository implements LencseRepository {
     @Override
     public LiveData<KezdoIdopontEntity> selectKezdoIdopont() {
         return lencseDatabase.kezdoIdopontDao().select();
+    }
+
+    @Override
+    public Cursor selectKezdoIdopontCursor() {
+        return lencseDatabase.kezdoIdopontDao().selectCursor();
     }
 
     @Override

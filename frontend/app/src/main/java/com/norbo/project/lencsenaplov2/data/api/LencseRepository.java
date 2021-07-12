@@ -1,5 +1,7 @@
 package com.norbo.project.lencsenaplov2.data.api;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 
 import com.norbo.project.lencsenaplov2.data.model.Lencse;
@@ -14,6 +16,7 @@ public interface LencseRepository {
     LiveData<List<LencseEntity>> selectAll();
 
     LiveData<KezdoIdopontEntity> selectKezdoIdopont();
+    Cursor selectKezdoIdopontCursor();
     CompletableFuture<Long> insert(KezdoIdopontEntity kezdoIdopont);
 
     LiveData<List<LencseEntity>> getLencseTisztitoViz();

@@ -27,6 +27,7 @@ public class DataBaseModule {
         return Room.databaseBuilder(application, LencseDatabase.class, LencseDatabase.DB_NAME)
                 .addMigrations(LencseDatabase.MIGRATION_1_2)
                 .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
                 .build();
     }
 

@@ -1,5 +1,7 @@
 package com.norbo.project.lencsenaplov2.db.dao;
 
+import android.database.Cursor;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -18,4 +20,7 @@ public interface KezdoIdopontDao {
 
     @Query("DELETE FROM kezdoidopont_table WHERE kezdoIdopont =:kezdoIdopont")
     void delete(long kezdoIdopont);
+
+    @Query("SELECT * FROM kezdoidopont_table LIMIT 1")
+    Cursor selectCursor();
 }
